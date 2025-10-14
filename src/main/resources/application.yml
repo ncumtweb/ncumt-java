@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ncumt
+    username: local
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+logging:
+  level:
+    root: INFO
+    com.web.ncumt: DEBUG
+  file:
+    name: logs/app.log        # 指定 log 輸出檔案
+  structured:
+    format:
+      file: ecs   # 輸出 ECS JSON 格式 log

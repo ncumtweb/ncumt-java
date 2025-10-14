@@ -1,0 +1,94 @@
+<footer id="footer" class="footer"  th:fragment="footer">
+    <div class="footer-content">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6">
+                    <h3 class="footer-heading">中央大學登山社</h3>
+                    <p>
+                        中大登山社於民國 64 年創立，
+                        幹部、社員人數眾多，從平易近人的高山百岳和歷史古道、專精的技能訓練與實作到深度探勘原始山林皆有涉略，
+                        亦有從事攀岩、溯溪、單車等活動。 在山社裡將可以交到一群能患難與共、一同歡笑、一同去挑戰自我的朋友，
+                        因愛山而相遇、因愛山而成為了幹部，希望能夠把山的美好傳承下去。
+                    </p>
+                    <p><a th:href="@{/aboutus}" class="footer-link-more">關於我們</a></p>
+                </div>
+
+                <div class="col-6 col-lg-2">
+                    <h3 class="footer-heading">其他連結</h3>
+                    <ul class="footer-links list-unstyled">
+                        <li><a th:href="@{/}"><i class="bi bi-chevron-right"></i> 首頁 </a></li>
+                        <li><a th:href="@{/course}"><i class="bi bi-chevron-right"></i> 社課影片 </a></li>
+                        <li><a th:href="@{/judgement}"><i class="bi bi-chevron-right"></i> 評分系統 </a></li>
+                        <li><a th:href="@{/record}"><i class="bi bi-chevron-right"></i> 行程記錄 </a></li>
+                        <li><a th:href="@{/aboutus}"><i class="bi bi-chevron-right"></i> 關於我們 </a></li>
+                        <li><a href="https://www.facebook.com/ncumountaineeringclub" target="_blank"><i class="bi bi-chevron-right"></i> 聯絡我們 </a></li>
+                        <li><a th:href="@{/faq}"><i class="bi bi-chevron-right"></i> FAQ </a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4">
+                    <h3 class="footer-heading">近期紀錄</h3>
+                    <ul class="footer-links footer-blog-entry list-unstyled">
+                        <li th:each="record : ${footerRecords}">
+                            <a th:href="@{'/record/' + ${record.id}}" class="d-flex align-items-center">
+                                <img th:src="@{${record.image}}" loading="lazy" alt="" class="img-fluid me-3">
+                                <div>
+                                    <div class="post-meta d-block">
+                                        <span class="date" th:text="${categoryArray[record.category]}"></span>
+                                        <span class="mx-1">&bullet;</span>
+                                        <span th:text="${record.startDate} + '-' + ${record.endDate}"></span>
+                                    </div>
+                                    <span th:text="${record.name}"></span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-legal">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="copyright">
+                    © Copyright <strong><span>ZenBlog</span></strong>. All Rights Reserved <br>
+                </div>
+                <div class="credits">
+                    Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="social-links mb-3 mb-lg-0 text-center text-md-end">
+                    <a href="https://www.facebook.com/ncumountaineeringclub" target="_blank" class="facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="https://www.instagram.com/ncumountaineeringclub/" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="https://github.com/ncumtweb/ncumt" target="_blank" class="github"><i class="bi bi-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+<script>
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js").then(
+            (registration) => {
+                console.log("Service worker registration succeeded:", registration);
+            },
+            (error) => {
+                console.error(`Service worker registration failed: ${error}`);
+            }
+        );
+    } else {
+        console.error("Service workers are not supported.");
+    }
+</script>
+
+<script>
+    $(document).ready(function(){
+        $('img').lazyload();
+    });
+</script>

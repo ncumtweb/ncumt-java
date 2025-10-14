@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{/layout/main.html}">
+
+<body>
+
+<main layout:fragment="content">
+
+    <!-- ======= Hero Slider Section ======= -->
+    <section id="hero-slider" class="hero-slider">
+        <div class="container-md" data-aos="fade-in">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="swiper sliderFeaturedPosts">
+                        <div class="swiper-wrapper">
+                            <!-- records: a list of objects passed from controller -->
+                            <div class="swiper-slide" th:each="record : ${records}">
+                                <a th:href="@{|/record/${record.id}|}"
+                                   class="img-bg d-flex align-items-end"
+                                   th:style="|background-image: url('${record.image}');|"
+                                   loading="lazy">
+                                    <div class="img-bg-inner">
+                                        <h2 th:text="${record.startDate} + ' - ' + ${record.endDate}">2025-01-01 -
+                                            2025-01-02</h2>
+                                        <h2 th:text="${record.name}">範例名稱</h2>
+                                        <p th:text="${record.description}">簡短描述</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="custom-swiper-button-next">
+                            <span class="bi-chevron-right"></span>
+                        </div>
+                        <div class="custom-swiper-button-prev">
+                            <span class="bi-chevron-left"></span>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Hero Slider Section -->
+
+    <!-- start post -->
+    <section class="signa-table-section clearfix">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <h1 class="page-title text-center ">公告</h1>
+                    <table id="post-table" class="table table-hover" style="font-size:20px">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">類別</th>
+                            <th scope="col">標題</th>
+                            <!-- 幹部才能編輯：使用 isAdmin 進行判斷 -->
+                            <th scope="col" th:if="${isAdmin}">編輯/刪除</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${#lists.isEmpty(posts)}">
+                            <td colspan="4">目前暫無公告</td>
+                        </tr>
+
+                        <tr th:each="post, iterStat : ${posts}" th:if="${post.pin} == 1"
+                            th:data-bs-toggle="modal" th:data-bs-target="${'#x' + post.id}">
+                            <td class="postshow"><i class="bi bi-pin-angle-fill"></i>
+                                <span th:text="${iterStat.index + 1}">1</span>
+                            </td>
+                            <td>
+                                    <span class="badge"
+                                          th:style="|background-color: ${tagArray[post.type]}; color:black;|"
+                                          th:text="${typeArray[post.type]}">類別</span>
+                            </td>
+                            <td th:text="${post.title}">標題</td>
+                            <td th:if="${isAdmin}">
+                                <form th:action="@{|/post/${post.id}|}" method="post">
+                                    <input type="hidden" name="_method" value="delete"/>
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <button type="button" class="bi bi-pencil-square"
+                                            th:onclick="|window.location='@{/post/{id}/edit(id=${post.id})}'|"></button>
+                                    <button type="submit" class="bi bi-trash"></button>
+                                </form>
+                            </td>
+                        </tr>
+
+                        <!-- 非置頂 -->
+                        <tr th:each="post, iterStat : ${posts}" th:if="${post.pin} != 1"
+                            th:data-bs-toggle="modal" th:data-bs-target="${'#x' + post.id}">
+                            <td class="postshow"><i class="bi bi-card-text"></i>
+                                <span th:text="${iterStat.index + 1}">1</span>
+                            </td>
+                            <td>
+                                    <span class="badge"
+                                          th:style="|background-color: ${tagArray[post.type]}; color:black;|"
+                                          th:text="${typeArray[post.type]}">類別</span>
+                            </td>
+                            <td th:text="${post.title}">標題</td>
+                            <td th:if="${isAdmin}">
+                                <form th:action="@{|/post/${post.id}|}" method="post">
+                                    <input type="hidden" name="_method" value="delete"/>
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <button type="button" class="bi bi-pencil-square"
+                                            th:onclick="|window.location='@{/post/{id}/edit(id=${post.id})}'|"></button>
+                                    <button type="submit" class="bi bi-trash"></button>
+                                </form>
+                            </td>
+                        </tr>
+
+                        <!-- Modal: one per post -->
+                        <div th:each="post : ${posts}">
+                            <div class="modal fade" th:id="${'x' + post.id}" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" th:text="${post.title}">標題</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body" th:utext="${post.content}">
+                                            <!-- post.content 可能包含 HTML -->
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section><!-- end post -->
+
+
+    <div class="container-md" data-aos="fade-in">
+        <div class="row justify-content-center">
+            <div class="col-lg-12 mb-5">
+                <h1 class="page-title text-center mb-4">山社行事曆</h1>
+                <div id="calendar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Modal -->
+    <div class="modal fade" id="calendarEvent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="calendarEventTitle"></h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>開始時間：<span id="calendarEventStart"></span></h5>
+                    <h5>結束時間：<span id="calendarEventEnd"></span></h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="editEvent"
+                            th:if="${isAdmin}">編輯
+                    </button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deleteEvent">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Event Modal -->
+
+    <script th:inline="javascript">
+        window.calendarConfig = {
+            events: [[${calendarEvents}]],
+            editUrlTemplate: /*[[@{/calendar/edit/{id}(id=':id')}]]*/
+        };
+    </script>
+    <script th:src="@{/assets/js/calendar.js}"></script>
+</main>
+</body>
+</html>

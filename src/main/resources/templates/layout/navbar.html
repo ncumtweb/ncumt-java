@@ -1,0 +1,132 @@
+<header th:fragment="navbar" id="header" class="header d-flex align-items-center fixed-top"
+        xmlns:th="http://www.thymeleaf.org">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+        <a th:href="@{/}" class="logo d-flex align-items-center">
+            <img th:src="@{/assets/img/favicon.png}" alt="favicon">
+            <h1>NCUMT</h1>
+        </a>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a th:href="@{/aboutUs}">關於我們</a></li>
+
+                <!-- 社課資訊 -->
+                <li class="dropdown">
+                    <a><span>社課資訊</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <ul>
+                        <li><a th:href="@{/course/register}">社課報名</a></li>
+                        <li><a th:href="@{/course}">社課影片</a></li>
+                    </ul>
+                </li>
+
+                <!-- 難度評分 -->
+                <li class="dropdown">
+                    <a><span>難度評分</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <ul>
+                        <li><a th:href="@{/judgement}">評分系統</a></li>
+                        <li><a th:href="@{/judgement/record}">評分紀錄</a></li>
+                        <li><a th:href="@{/judgement/rule}">評分規則</a></li>
+                        <li><a th:href="@{/judgement/point-rule}">分數計算</a></li>
+                    </ul>
+                </li>
+
+                <!-- 登入前顯示 -->
+                <li th:if="!${isAdmin}">
+                    <a th:href="@{/record}">所有紀錄</a>
+                </li>
+
+                <!-- 登入後顯示 -->
+                <li class="dropdown" th:if="${isAdmin}">
+                    <a><span>系統</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <ul>
+                        <li>
+                            <a th:href="@{/equipment/select}">個人裝備租借系統</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- 行程記錄 -->
+                <li class="dropdown" th:if="${isAdmin}">
+                    <a><span>行程記錄</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <ul>
+                        <li><a th:href="@{/record}">所有紀錄</a></li>
+                        <li th:if="${isAdmin}">
+                            <a th:href="@{/record/create}">新增紀錄</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- FAQ -->
+                <li th:if="${isAdmin}">
+                    <a th:href="@{/faq}">FAQ</a>
+                </li>
+
+                <li class="dropdown" th:if="${isAdmin}">
+                    <a><span>FAQ</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <ul>
+                        <li><a th:href="@{/faq}">FAQ</a></li>
+                        <li><a th:href="@{/faq/create}">新增FAQ</a></li>
+                    </ul>
+                </li>
+
+                <!-- 幹部專區 -->
+                <li class="dropdown" th:if="${isAdmin}">
+                    <a><span>幹部專區</span><i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <ul>
+                        <li><a th:href="@{/record/create}">新增紀錄</a></li>
+                        <li><a th:href="@{/post/create}">新增公告</a></li>
+                        <li><a th:href="@{/calendar/create}">新增活動</a></li>
+                        <li><a th:href="@{/course/create}">新增社課</a></li>
+                        <li><a th:href="@{/faq/create}">新增FAQ</a></li>
+                    </ul>
+                </li>
+
+                <!-- 登入 / 登出 -->
+                <li th:if="${currentUser == null}">
+                    <a th:href="@{/portal/option}">登入</a>
+                </li>
+
+                <li class="dropdown" th:if="${currentUser != null}">
+                    <a>
+                        <span th:text="${currentUser.nameZh} + ' 您好'">使用者 您好</span>
+                        <i class="bi bi-chevron-down dropdown-indicator"></i>
+                    </a>
+                    <ul>
+                        <li><a th:href="@{/user/profile}">個人資料</a></li>
+                        <li><a th:href="@{/course/my}">已報名社課</a></li>
+                        <li><a th:href="@{/rental}">已租借清單</a></li>
+                        <li>
+                            <!-- 使用 JavaScript 提交 POST 表單來執行登出 -->
+                            <a href="#" onclick="document.getElementById('logoutForm').submit(); return false;">登出</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="position-relative">
+            <a href="https://www.facebook.com/ncumountaineeringclub" target="_blank" class="mx-2">
+                <span class="bi-facebook"></span>
+            </a>
+            <a href="https://www.instagram.com/ncumountaineeringclub/" target="_blank" class="mx-2">
+                <span class="bi-instagram"></span>
+            </a>
+            <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+
+            <!-- Search Form -->
+            <div class="search-form-wrap js-search-form-wrap">
+                <form th:action="@{/search}" class="search-form" method="get">
+                    <span class="icon bi-search"></span>
+                    <input type="text" name="q" placeholder="Search" class="form-control">
+                    <button class="btn js-search-close"><span class="bi-x"></span></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 登出用的隱藏表單 -->
+    <form id="logoutForm" method="post" style="display: none;" th:action="@{/logout}">
+        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+    </form>
+</header>

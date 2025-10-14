@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'中央大學登山社 - ' + (${pageTitle} ?: '')"></title>
+
+    <!-- FullCalendar -->
+    <link th:href="@{/assets/vendor/calendar/calendar.css}" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+
+    <!-- LazyLoad -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+    <!-- Vendor CSS -->
+    <link th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/assets/vendor/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet">
+    <link th:href="@{/assets/vendor/swiper/swiper-bundle.min.css}" rel="stylesheet">
+    <link th:href="@{/assets/vendor/glightbox/css/glightbox.min.css}" rel="stylesheet">
+    <link th:href="@{/assets/vendor/aos/aos.css}" rel="stylesheet">
+
+    <!-- Template CSS -->
+    <link th:href="@{/assets/css/variables.css}" rel="stylesheet">
+    <link th:href="@{/assets/css/main.css}" rel="stylesheet">
+
+    <!-- Vendor JS -->
+    <script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/assets/vendor/swiper/swiper-bundle.min.js}"></script>
+    <script th:src="@{/assets/vendor/glightbox/js/glightbox.min.js}"></script>
+    <script th:src="@{/assets/vendor/aos/aos.js}"></script>
+    <script th:src="@{/assets/vendor/validate/confirmDelete.js}"></script>
+
+    <script th:src="@{/assets/js/main.js}"></script>
+    <script th:src="@{/assets/js/toast.js}"></script>
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            // For login
+            const currentUser = [[${currentUser}]];
+            if (currentUser) {
+                const userName = currentUser.nameZh;
+                showToast(userName + ' 登入成功！');
+            }
+
+            // For logout
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('logout')) {
+                showToast('登出成功！');
+                // Remove the query parameter from the URL without reloading the page
+                const newUrl = window.location.pathname;
+                history.replaceState({}, document.title, newUrl);
+            }
+        });
+    </script>
+</head>
+<div th:replace="~{layout/navbar :: navbar}"></div>
+<main id="main" layout:fragment="content">
+</main>
+<div th:replace="~{layout/footer :: footer}"></div>
+</html>

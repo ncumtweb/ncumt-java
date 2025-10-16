@@ -83,13 +83,13 @@
                 </li>
 
                 <!-- 登入 / 登出 -->
-                <li th:if="${currentUser == null}">
+                <li th:if="${currentLoginUser == null}">
                     <a th:href="@{/portal/option}">登入</a>
                 </li>
 
-                <li class="dropdown" th:if="${currentUser != null}">
+                <li class="dropdown" th:if="${currentLoginUser != null}">
                     <a>
-                        <span th:text="${currentUser.nameZh} + ' 您好'">使用者 您好</span>
+                        <span th:text="${currentLoginUser.nameZh} + ' 您好'">使用者 您好</span>
                         <i class="bi bi-chevron-down dropdown-indicator"></i>
                     </a>
                     <ul>

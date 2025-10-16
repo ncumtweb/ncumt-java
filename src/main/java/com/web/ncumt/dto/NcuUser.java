@@ -1,4 +1,4 @@
-package com.web.ncumt.controller.data;
+package com.web.ncumt.dto;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import lombok.Data;
  * 從 NCU OAuth2 Provider 獲取的使用者資訊的資料傳輸物件 (DTO)。
  */
 @Data
-public class NcuUserDTO {
+public class NcuUser {
     private String id;
     private String identifier;
     private String accountType;

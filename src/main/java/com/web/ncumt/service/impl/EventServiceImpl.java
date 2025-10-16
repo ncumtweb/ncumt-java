@@ -1,6 +1,6 @@
 package com.web.ncumt.service.impl;
 
-import com.web.ncumt.controller.data.CalendarEventDTO;
+import com.web.ncumt.dto.CalendarEvent;
 import com.web.ncumt.entity.Event;
 import com.web.ncumt.enums.EventCategory;
 import com.web.ncumt.repository.EventRepository;
@@ -19,16 +19,16 @@ public class EventServiceImpl implements EventService {
     private EventRepository eventRepository;
 
     @Override
-    public List<CalendarEventDTO> listIndexCalendarEvent() {
+    public List<CalendarEvent> listIndexCalendarEvent() {
         List<Event> eventList = eventRepository.findAll();
-        List<CalendarEventDTO> calendarEventList = new ArrayList<>();
+        List<CalendarEvent> calendarEventList = new ArrayList<>();
 
         for (Event event : eventList) {
             EventCategory eventCategory = EventCategory.getByCategoryIndex(event.getCategory());
 
             String title = eventCategory.getPrefix() + event.getTitle();
 
-            CalendarEventDTO dto = CalendarEventDTO.builder()
+            CalendarEvent dto = CalendarEvent.builder()
                     .id(event.getId())
                     .title(title)
                     .start(event.getStart())

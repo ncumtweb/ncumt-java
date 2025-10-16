@@ -1,10 +1,10 @@
 package com.web.ncumt.service;
 
-import com.web.ncumt.controller.data.CalendarEventDTO;
+import com.web.ncumt.dto.CalendarEvent;
 
 import java.util.List;
 
 public interface EventService {
 
-    List<CalendarEventDTO> listIndexCalendarEvent();
+    List<CalendarEvent> listIndexCalendarEvent();
 }

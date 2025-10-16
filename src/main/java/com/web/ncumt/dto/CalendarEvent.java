@@ -1,4 +1,4 @@
-package com.web.ncumt.controller.data;
+package com.web.ncumt.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class CalendarEventDTO {
+public class CalendarEvent {
 
     private Long id;
 

@@ -29,7 +29,7 @@
                 <div class="col-lg-4">
                     <h3 class="footer-heading">近期紀錄</h3>
                     <ul class="footer-links footer-blog-entry list-unstyled">
-                        <li th:each="record : ${footerRecords}">
+                        <li th:each="record : ${footerRecordList}">
                             <a th:href="@{'/record/' + ${record.id}}" class="d-flex align-items-center">
                                 <img th:src="@{${record.image}}" loading="lazy" alt="" class="img-fluid me-3">
                                 <div>

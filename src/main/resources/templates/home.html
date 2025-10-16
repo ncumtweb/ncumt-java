@@ -15,7 +15,7 @@
                     <div class="swiper sliderFeaturedPosts">
                         <div class="swiper-wrapper">
                             <!-- records: a list of objects passed from controller -->
-                            <div class="swiper-slide" th:each="record : ${records}">
+                            <div class="swiper-slide" th:each="record : ${recordList}">
                                 <a th:href="@{|/record/${record.id}|}"
                                    class="img-bg d-flex align-items-end"
                                    th:style="|background-image: url('${record.image}');|"
@@ -174,7 +174,7 @@
 
     <script th:inline="javascript">
         window.calendarConfig = {
-            events: [[${calendarEvents}]],
+            events: [[${calendarEventList}]],
             editUrlTemplate: /*[[@{/calendar/edit/{id}(id=':id')}]]*/
         };
     </script>

@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="'中央大學登山社 - ' + (${pageTitle} ?: '')"></title>
 
+    <!-- Favicons -->
+    <link rel="icon" th:href="@{/assets/img/favicon.png}">
+
     <!-- FullCalendar -->
     <link th:href="@{/assets/vendor/calendar/calendar.css}" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -38,29 +41,17 @@
     <script th:src="@{/assets/js/toast.js}"></script>
     <script th:inline="javascript">
         document.addEventListener('DOMContentLoaded', function() {
-            // For login
-            const currentUser = [[${currentLoginUser}]];
-            if (currentUser) {
-                const userName = currentUser.nameZh;
-                if (currentUser.isLoginSuccess) {
-                    showToast(userName + ' 登入成功！');
-                    currentUser.isLoginSuccess = false;
-                }
-            }
-
-            // For logout
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('logout')) {
-                showToast('登出成功！');
-                // Remove the query parameter from the URL without reloading the page
-                const newUrl = window.location.pathname;
-                history.replaceState({}, document.title, newUrl);
+            const toastMessage = /*[[${toastMessage}]]*/ null;
+            if (toastMessage) {
+                showToast(toastMessage.message, toastMessage.type);
             }
         });
     </script>
 </head>
+<body>
 <div th:replace="~{layout/navbar :: navbar}"></div>
 <main id="main" layout:fragment="content">
 </main>
 <div th:replace="~{layout/footer :: footer}"></div>
+</body>
 </html>

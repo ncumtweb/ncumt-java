@@ -1,6 +1,6 @@
 package com.web.ncumt.service.impl;
 
-import com.web.ncumt.controller.data.NcuUserDTO;
+import com.web.ncumt.dto.NcuUser;
 import com.web.ncumt.entity.User;
 import com.web.ncumt.repository.UserRepository;
 import com.web.ncumt.service.UserService;
@@ -31,12 +31,12 @@ public class UserServiceImpl implements UserService {
      * {@inheritDoc}
      */
     @Override
-    public User findOrCreateUser(NcuUserDTO ncuUserDTO) {
+    public User findOrCreateUser(NcuUser ncuUser) {
         // 根據 email 尋找使用者
-        return userRepository.findByEmail(ncuUserDTO.getEmail())
+        return userRepository.findByEmail(ncuUser.getEmail())
                 .map(user -> {
                     // 如果使用者已存在，則更新其資訊
-                    updateUserData(user, ncuUserDTO);
+                    updateUserData(user, ncuUser);
                     user.setUpdatedAt(LocalDateTime.now());
                     // 儲存並返回更新後的使用者
                     return userRepository.save(user);
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
                 .orElseGet(() -> {
                     // 如果使用者不存在，則建立一個新使用者
                     User newUser = new User();
-                    updateUserData(newUser, ncuUserDTO);
+                    updateUserData(newUser, ncuUser);
                     newUser.setCreatedAt(LocalDateTime.now());
                     newUser.setUpdatedAt(LocalDateTime.now());
                     // 儲存並返回新建立的使用者
@@ -56,18 +56,18 @@ public class UserServiceImpl implements UserService {
      * 使用 NcuUserDTO 的資料更新 User 實體。
      *
      * @param user       要更新的 User 實體
-     * @param ncuUserDTO 包含新資料的 DTO
+     * @param ncuUser 包含新資料的 DTO
      */
-    private void updateUserData(User user, NcuUserDTO ncuUserDTO) {
-        user.setEmail(ncuUserDTO.getEmail());
-        user.setNameZh(ncuUserDTO.getChineseName());
-        user.setStudentId(ncuUserDTO.getStudentId());
-        user.setNameEn(ncuUserDTO.getEnglishName());
-        if (ncuUserDTO.getGender() != null) {
-            user.setGender(Short.parseShort(ncuUserDTO.getGender()));
+    private void updateUserData(User user, NcuUser ncuUser) {
+        user.setEmail(ncuUser.getEmail());
+        user.setNameZh(ncuUser.getChineseName());
+        user.setStudentId(ncuUser.getStudentId());
+        user.setNameEn(ncuUser.getEnglishName());
+        if (ncuUser.getGender() != null) {
+            user.setGender(Short.parseShort(ncuUser.getGender()));
         }
-        user.setBirthday(ncuUserDTO.getBirthday());
-        user.setPersonalId(ncuUserDTO.getPersonalId());
-        user.setPhone(ncuUserDTO.getMobilePhone());
+        user.setBirthday(ncuUser.getBirthday());
+        user.setPersonalId(ncuUser.getPersonalId());
+        user.setPhone(ncuUser.getMobilePhone());
     }
 }

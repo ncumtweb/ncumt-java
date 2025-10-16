@@ -1,6 +1,6 @@
 package com.web.ncumt.service;
 
-import com.web.ncumt.controller.data.NcuUserDTO;
+import com.web.ncumt.dto.NcuUser;
 import com.web.ncumt.entity.User;
 
 /**
@@ -16,13 +16,13 @@ public interface UserService {
     User saveUser(User user);
 
     /**
-     * 根據 NcuUserDTO 尋找或建立使用者。
+     * 根據 {@link NcuUser} 尋找或建立使用者。
      * <p>
      * 如果使用者已存在（根據電子信箱判斷），則更新其資訊；
      * 否則，建立一個新使用者。
      *
-     * @param ncuUserDTO 從 OAuth2 登入流程中獲取的使用者資料傳輸物件
+     * @param ncuUser 從 OAuth2 登入流程中獲取的使用者資料傳輸物件
      * @return 找到或建立的使用者物件
      */
-    User findOrCreateUser(NcuUserDTO ncuUserDTO);
+    User findOrCreateUser(NcuUser ncuUser);
 }

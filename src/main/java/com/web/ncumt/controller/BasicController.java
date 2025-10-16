@@ -1,6 +1,6 @@
 package com.web.ncumt.controller;
 
-import com.web.ncumt.controller.data.CalendarEventDTO;
+import com.web.ncumt.dto.CalendarEvent;
 import com.web.ncumt.entity.Record;
 import com.web.ncumt.service.EventService;
 import com.web.ncumt.service.PostService;
@@ -31,10 +31,10 @@ public class BasicController {
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("records", recordService.listLatestRecord(5));
+        model.addAttribute("recordList", recordService.listLatestRecord(5));
         model.addAttribute("pageTitle", "首頁");
-        List<CalendarEventDTO> calendarEvents = eventService.listIndexCalendarEvent();
-        model.addAttribute("calendarEvents", calendarEvents);
+        List<CalendarEvent> calendarEventList = eventService.listIndexCalendarEvent();
+        model.addAttribute("calendarEventList", calendarEventList);
         return "home";
     }
 
@@ -44,8 +44,8 @@ public class BasicController {
         return "information/aboutUs";
     }
 
-    @ModelAttribute("footerRecords")
-    public List<Record> footerRecords() {
+    @ModelAttribute("footerRecordList")
+    public List<Record> footerRecordList() {
         return recordService.listLatestRecord(5);
     }
 

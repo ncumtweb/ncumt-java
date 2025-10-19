@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.tuple;
 @SpringBootTest
 @SuppressWarnings("unused")
 class EventServiceImplTest {
-    // test ci
+
     @Autowired
     private EventService eventService;
 

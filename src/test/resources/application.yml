@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  flyway:
+    enabled: false
+logging:
+  level:
+    root: INFO
+    com.web.ncumt: DEBUG
+  file:
+    name: logs/app.log        # 指定 log 輸出檔案
+  structured:
+    format:
+      file: ecs   # 輸出 ECS JSON 格式 log

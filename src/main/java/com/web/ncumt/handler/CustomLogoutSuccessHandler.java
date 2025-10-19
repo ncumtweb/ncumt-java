@@ -1,5 +1,8 @@
 package com.web.ncumt.handler;
 
+import com.web.ncumt.constant.HeaderConstant;
+import com.web.ncumt.constant.MessageConstant;
+import com.web.ncumt.constant.URLConstant;
 import com.web.ncumt.helper.ToastMessageHelper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,6 +29,9 @@ import java.io.IOException;
 @SuppressWarnings("unused")
 public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 
+    /**
+     * 用於新增 Toast 提示訊息的輔助類別。
+     */
     @Autowired
     private ToastMessageHelper toastMessageHelper;
 
@@ -44,12 +50,11 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         HttpSession session = request.getSession();
 
-        // 使用 ToastMessageHelper 設定一次性的登出成功訊息
-        toastMessageHelper.addSuccessMessage(session, "您已成功登出！");
+        toastMessageHelper.addSuccessMessage(session, MessageConstant.LOGOUT_SUCCESS);
 
         // 決定重導向的 URL
-        String refererUrl = request.getHeader("Referer");
-        String targetUrl = (refererUrl != null) ? refererUrl : "/";
+        String refererUrl = request.getHeader(HeaderConstant.REFERER);
+        String targetUrl = (refererUrl != null) ? refererUrl : URLConstant.HOME;
 
         response.sendRedirect(targetUrl);
     }

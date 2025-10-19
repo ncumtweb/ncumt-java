@@ -14,6 +14,9 @@ import java.time.LocalDateTime;
 @Table(name = "\"user\"")
 public class User {
 
+    /**
+     * 使用者的唯一識別碼。
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,8 +36,14 @@ public class User {
      */
     private String email;
 
+    /**
+     * 帳號建立時間。
+     */
     private LocalDateTime createdAt;
 
+    /**
+     * 帳號最後更新時間。
+     */
     private LocalDateTime updatedAt;
 
     /**

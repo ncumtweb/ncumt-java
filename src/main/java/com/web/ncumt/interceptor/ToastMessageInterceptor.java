@@ -25,6 +25,9 @@ import org.springframework.web.servlet.ModelAndView;
 @SuppressWarnings("unused")
 public class ToastMessageInterceptor implements HandlerInterceptor {
 
+    /**
+     * 用於管理 Toast 提示訊息的輔助元件。
+     */
     @Autowired
     private ToastMessageHelper toastMessageHelper;
 

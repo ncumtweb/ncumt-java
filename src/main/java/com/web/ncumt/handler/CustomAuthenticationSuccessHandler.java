@@ -1,7 +1,9 @@
 package com.web.ncumt.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.web.ncumt.constant.MessageConstant;
 import com.web.ncumt.constant.SessionConstant;
+import com.web.ncumt.constant.URLConstant;
 import com.web.ncumt.dto.LoginUser;
 import com.web.ncumt.dto.NcuUser;
 import com.web.ncumt.entity.User;
@@ -15,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
@@ -38,14 +39,27 @@ import java.io.IOException;
 @SuppressWarnings("unused")
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    private final RequestCache requestCache = new HttpSessionRequestCache();
+    /**
+     * 用於快取和還原登入前請求的物件。
+     */
+    @Autowired
+    private RequestCache requestCache;
 
+    /**
+     * 用於操作使用者資料的服務。
+     */
     @Autowired
     private UserService userService;
 
+    /**
+     * 用於在 Java 物件和 JSON 之間進行轉換的物件。
+     */
     @Autowired
     private ObjectMapper objectMapper;
 
+    /**
+     * 用於新增 Toast 提示訊息的輔助類別。
+     */
     @Autowired
     private ToastMessageHelper toastMessageHelper;
 
@@ -53,7 +67,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
         OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
-        log.debug("OAuth2 User Attributes: {}", oauth2User.getAttributes());
 
         NcuUser ncuUser = objectMapper.convertValue(oauth2User.getAttributes(), NcuUser.class);
         User user = userService.findOrCreateUser(ncuUser);
@@ -67,7 +80,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         log.debug("User '{}' stored in session.", user.getNameZh());
 
         // 使用 ToastMessageHelper 設定一次性的成功訊息
-        toastMessageHelper.addSuccessMessage(session, user.getNameZh() + " 登入成功！");
+        toastMessageHelper.addSuccessMessage(session, MessageConstant.LOGIN_SUCCESS(user.getNameZh()));
 
         // 1. 優先使用 Spring Security 儲存的原始請求
         SavedRequest savedRequest = requestCache.getRequest(request, response);
@@ -80,15 +93,15 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         }
 
         // 2. 作為備用方案，檢查我們手動儲存的 referer
-        String preLoginRefererUrl = (String) session.getAttribute("preLoginRefererUrl");
+        String preLoginRefererUrl = (String) session.getAttribute(SessionConstant.PRE_LOGIN_REFERER_URL);
         if (StringUtils.hasText(preLoginRefererUrl)) {
-            session.removeAttribute("preLoginRefererUrl");
+            session.removeAttribute(SessionConstant.PRE_LOGIN_REFERER_URL);
             log.debug("Redirecting to pre-login referer URL: {}", preLoginRefererUrl);
             response.sendRedirect(preLoginRefererUrl);
             return;
         }
 
         // 3. 如果都沒有，則導向到首頁
-        response.sendRedirect("/");
+        response.sendRedirect(URLConstant.HOME);
     }
 }

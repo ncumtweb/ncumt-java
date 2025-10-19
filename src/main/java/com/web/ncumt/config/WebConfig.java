@@ -16,6 +16,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SuppressWarnings("unused")
 public class WebConfig implements WebMvcConfigurer {
 
+    /**
+     * 用於處理 Toast 提示訊息的攔截器。
+     */
     @Autowired
     private ToastMessageInterceptor toastMessageInterceptor;
 

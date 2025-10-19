@@ -9,11 +9,26 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * </p>
  */
 public enum ToastMessageType {
+    /**
+     * 成功訊息。
+     */
     SUCCESS("success"),
+    /**
+     * 錯誤訊息。
+     */
     ERROR("error"),
+    /**
+     * 警告訊息。
+     */
     WARNING("warning"),
+    /**
+     * 資訊訊息。
+     */
     INFO("info");
 
+    /**
+     * 訊息類型的鍵名。
+     */
     private final String key;
 
     ToastMessageType(String key) {

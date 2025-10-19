@@ -1,14 +1,18 @@
 package com.web.ncumt.config;
 
+import com.web.ncumt.constant.URLConstant;
 import com.web.ncumt.handler.CustomAuthenticationEntryPoint;
 import com.web.ncumt.handler.CustomAuthenticationSuccessHandler;
 import com.web.ncumt.handler.CustomLogoutSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
 
 /**
  * Spring Security 的主要組態設定。
@@ -27,16 +31,22 @@ import org.springframework.security.web.SecurityFilterChain;
 @SuppressWarnings("unused")
 public class SecurityConfig {
 
-    public static final String LOGIN_OPTION = "/portal/option";
-
-    public static final String LOGOUT_URL = "/logout";
-
+    /**
+     * 自訂的登出成功處理器。
+     */
     @Autowired
     private CustomLogoutSuccessHandler customLogoutSuccessHandler;
 
+    /**
+     * 自訂的認證成功處理器。
+     */
     @Autowired
+    @Lazy
     private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
+    /**
+     * 自訂的認證入口點。
+     */
     @Autowired
     private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
@@ -58,11 +68,11 @@ public class SecurityConfig {
                         .anyRequest().permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2
-                        .loginPage(LOGIN_OPTION)
+                        .loginPage(URLConstant.LOGIN_OPTION)
                         .successHandler(customAuthenticationSuccessHandler)
                 )
                 .logout(logout -> logout
-                        .logoutUrl(LOGOUT_URL)
+                        .logoutUrl(URLConstant.LOGOUT_URL)
                         .logoutSuccessHandler(customLogoutSuccessHandler)
                         .permitAll()
                 )
@@ -71,5 +81,15 @@ public class SecurityConfig {
                 );
 
         return http.build();
+    }
+
+    /**
+     * 建立一個 RequestCache Bean，用於儲存和還原登入前的請求。
+     *
+     * @return 一個 HttpSessionRequestCache 實例
+     */
+    @Bean
+    public RequestCache requestCache() {
+        return new HttpSessionRequestCache();
     }
 }

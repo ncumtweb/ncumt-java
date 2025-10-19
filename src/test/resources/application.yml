@@ -1,0 +1,46 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  flyway:
+    enabled: false
+  security:
+    oauth2:
+      client:
+        registration:
+          bael:
+            client-name: ncumt-local
+            client-id: TEST_ID
+            client-secret: TEST_SECRET
+            authorization-grant-type: authorization_code
+            redirect-uri: "TEST_URI"
+            scope:
+              - identifier
+              - chinese-name
+              - english-name
+              - gender
+              - birthday
+              - personal-id
+              - student-id
+              - email
+              - mobile-phone
+        provider:
+          bael:
+            token-uri: https://portal.ncu.edu.tw/oauth2/token
+            authorization-uri: https://portal.ncu.edu.tw/oauth2/authorization
+            user-info-uri: https://portal.ncu.edu.tw/apis/oauth/v1/info
+            user-name-attribute: identifier
+logging:
+  level:
+    root: INFO
+    com.web.ncumt: DEBUG
+  file:
+    name: logs/app.log        # 指定 log 輸出檔案
+  structured:
+    format:
+      file: ecs   # 輸出 ECS JSON 格式 log

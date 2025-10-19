@@ -1,6 +1,7 @@
 package com.web.ncumt.handler;
 
-import com.web.ncumt.config.SecurityConfig;
+import com.web.ncumt.constant.MessageConstant;
+import com.web.ncumt.constant.URLConstant;
 import com.web.ncumt.helper.ToastMessageHelper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,6 +25,9 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
+    /**
+     * 用於新增 Toast 提示訊息的輔助類別。
+     */
     @Autowired
     @SuppressWarnings("unused")
     private ToastMessageHelper toastMessageHelper;
@@ -41,9 +45,9 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         HttpSession session = request.getSession();
 
         // 使用 ToastMessageHelper 設定一次性的警告訊息
-        toastMessageHelper.addWarningMessage(session, "此頁面需要登入才能存取，請先登入。");
+        toastMessageHelper.addWarningMessage(session, MessageConstant.AUTH_REQUIRED);
 
         // 將使用者重導向到登入選項頁面
-        response.sendRedirect(SecurityConfig.LOGIN_OPTION);
+        response.sendRedirect(URLConstant.LOGIN_OPTION);
     }
 }

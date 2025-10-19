@@ -9,6 +9,32 @@ spring:
       ddl-auto: create-drop
   flyway:
     enabled: false
+  security:
+    oauth2:
+      client:
+        registration:
+          bael:
+            client-name: ncumt-local
+            client-id: TEST_ID
+            client-secret: TEST_SECRET
+            authorization-grant-type: authorization_code
+            redirect-uri: "TEST_URI"
+            scope:
+              - identifier
+              - chinese-name
+              - english-name
+              - gender
+              - birthday
+              - personal-id
+              - student-id
+              - email
+              - mobile-phone
+        provider:
+          bael:
+            token-uri: https://portal.ncu.edu.tw/oauth2/token
+            authorization-uri: https://portal.ncu.edu.tw/oauth2/authorization
+            user-info-uri: https://portal.ncu.edu.tw/apis/oauth/v1/info
+            user-name-attribute: identifier
 logging:
   level:
     root: INFO

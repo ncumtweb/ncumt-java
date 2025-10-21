@@ -1,5 +1,6 @@
 package com.web.ncumt.service.impl;
 
+import com.web.ncumt.dto.PostDTO;
 import com.web.ncumt.entity.Post;
 import com.web.ncumt.repository.PostRepository;
 import com.web.ncumt.service.PostService;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @SuppressWarnings("unused")
@@ -16,8 +18,10 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private PostRepository postRepository;
 
-    public List<Post> listActivePost()
-    {
-        return postRepository.findByExpiredAtAfterOrderByPinDescCreatedAtDesc(LocalDateTime.now());
+    public List<PostDTO> listActivePost() {
+        List<Post> posts = postRepository.findByExpiredAtAfterOrderByPinDescCreatedAtDesc(LocalDateTime.now());
+        return posts.stream()
+                .map(PostDTO::fromEntity)
+                .collect(Collectors.toList());
     }
 }

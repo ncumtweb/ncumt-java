@@ -32,12 +32,12 @@
                 </li>
 
                 <!-- 登入前顯示 -->
-                <li th:if="!${isAdmin}">
+                <li th:if="!${isClubMember}">
                     <a th:href="@{/record}">所有紀錄</a>
                 </li>
 
                 <!-- 登入後顯示 -->
-                <li class="dropdown" th:if="${isAdmin}">
+                <li class="dropdown" th:if="${isClubMember}">
                     <a><span>系統</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                     <ul>
                         <li>
@@ -47,18 +47,18 @@
                 </li>
 
                 <!-- 行程記錄 -->
-                <li class="dropdown" th:if="${isAdmin}">
+                <li class="dropdown" th:if="${isClubMember}">
                     <a><span>行程記錄</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                     <ul>
                         <li><a th:href="@{/record}">所有紀錄</a></li>
-                        <li th:if="${isAdmin}">
+                        <li th:if="${isClubMember}">
                             <a th:href="@{/record/create}">新增紀錄</a>
                         </li>
                     </ul>
                 </li>
 
                 <!-- FAQ -->
-                <li th:if="${isAdmin}">
+                <li th:if="!${isClubMember}">
                     <a th:href="@{/faq}">FAQ</a>
                 </li>
 
@@ -112,17 +112,10 @@
             <a href="https://www.instagram.com/ncumountaineeringclub/" target="_blank" class="mx-2">
                 <span class="bi-instagram"></span>
             </a>
-            <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
+            <a class="mx-2" href="https://github.com/ncumtweb/ncumt-java" target="_blank">
+                <span class="bi bi-github"></span>
+            </a>
             <i class="bi bi-list mobile-nav-toggle"></i>
-
-            <!-- Search Form -->
-            <div class="search-form-wrap js-search-form-wrap">
-                <form th:action="@{/search}" class="search-form" method="get">
-                    <span class="icon bi-search"></span>
-                    <input type="text" name="q" placeholder="Search" class="form-control">
-                    <button class="btn js-search-close"><span class="bi-x"></span></button>
-                </form>
-            </div>
         </div>
     </div>
     <!-- 登出用的隱藏表單 -->

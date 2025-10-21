@@ -7,6 +7,7 @@ import com.web.ncumt.constant.URLConstant;
 import com.web.ncumt.dto.LoginUser;
 import com.web.ncumt.dto.NcuUser;
 import com.web.ncumt.entity.User;
+import com.web.ncumt.enums.Role;
 import com.web.ncumt.helper.ToastMessageHelper;
 import com.web.ncumt.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -75,7 +76,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
         session.setAttribute(SessionConstant.CURRENT_LOGIN_USER, LoginUser.builder()
                 .nameZh(user.getNameZh())
-                .role(user.getRole())
+                .role(Role.fromValue(user.getRole()))
                 .build());
         log.debug("User '{}' stored in session.", user.getNameZh());
 

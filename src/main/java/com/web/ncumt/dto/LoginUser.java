@@ -1,5 +1,6 @@
 package com.web.ncumt.dto;
 
+import com.web.ncumt.enums.Role;
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,5 +17,5 @@ public class LoginUser {
     /**
      * 使用者的角色。
      */
-    private Integer role;
+    private Role role;
 }

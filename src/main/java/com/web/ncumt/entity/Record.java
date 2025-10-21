@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
- * 代表一筆登山紀錄紀錄的實體類別。
+ * 代表一筆登山紀錄的實體類別。
  */
 @Entity
 @Data

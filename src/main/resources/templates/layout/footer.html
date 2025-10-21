@@ -31,10 +31,10 @@
                     <ul class="footer-links footer-blog-entry list-unstyled">
                         <li th:each="record : ${footerRecordList}">
                             <a th:href="@{'/record/' + ${record.id}}" class="d-flex align-items-center">
-                                <img th:src="@{${record.image}}" loading="lazy" alt="" class="img-fluid me-3">
+                                <img alt="" class="img-fluid me-3" loading="lazy" th:src="@{'/' + ${record.image}}">
                                 <div>
                                     <div class="post-meta d-block">
-                                        <span class="date" th:text="${categoryArray[record.category]}"></span>
+                                        <span class="date" th:text="${record.categoryName}"></span>
                                         <span class="mx-1">&bullet;</span>
                                         <span th:text="${record.startDate} + '-' + ${record.endDate}"></span>
                                     </div>
@@ -62,7 +62,8 @@
                 <div class="social-links mb-3 mb-lg-0 text-center text-md-end">
                     <a href="https://www.facebook.com/ncumountaineeringclub" target="_blank" class="facebook"><i class="bi bi-facebook"></i></a>
                     <a href="https://www.instagram.com/ncumountaineeringclub/" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
-                    <a href="https://github.com/ncumtweb/ncumt" target="_blank" class="github"><i class="bi bi-github"></i></a>
+                    <a class="github" href="https://github.com/ncumtweb/ncumt-java" target="_blank"><i
+                            class="bi bi-github"></i></a>
                 </div>
             </div>
         </div>
@@ -70,22 +71,6 @@
 </footer>
 
 <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-
-<script>
-    if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("/sw.js").then(
-            (registration) => {
-                console.log("Service worker registration succeeded:", registration);
-            },
-            (error) => {
-                console.error(`Service worker registration failed: ${error}`);
-            }
-        );
-    } else {
-        console.error("Service workers are not supported.");
-    }
-</script>
 
 <script>
     $(document).ready(function(){

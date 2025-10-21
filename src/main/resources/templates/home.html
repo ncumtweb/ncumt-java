@@ -23,8 +23,8 @@
                                     <div class="img-bg-inner">
                                         <h2 th:text="${record.startDate} + ' - ' + ${record.endDate}">2025-01-01 -
                                             2025-01-02</h2>
-                                        <h2 th:text="${record.name}">範例名稱</h2>
-                                        <p th:text="${record.description}">簡短描述</p>
+                                        <h2 th:text="${record.name}"></h2>
+                                        <p th:text="${record.description}"></p>
                                     </div>
                                 </a>
                             </div>
@@ -60,19 +60,19 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:if="${#lists.isEmpty(posts)}">
+                        <tr th:if="${#lists.isEmpty(postList)}">
                             <td colspan="4">目前暫無公告</td>
                         </tr>
 
-                        <tr th:each="post, iterStat : ${posts}" th:if="${post.pin} == 1"
+                        <tr th:each="post, iterStat : ${postList}" th:if="${post.pin} == 1"
                             th:data-bs-toggle="modal" th:data-bs-target="${'#x' + post.id}">
                             <td class="postshow"><i class="bi bi-pin-angle-fill"></i>
                                 <span th:text="${iterStat.index + 1}">1</span>
                             </td>
                             <td>
                                     <span class="badge"
-                                          th:style="|background-color: ${tagArray[post.type]}; color:black;|"
-                                          th:text="${typeArray[post.type]}">類別</span>
+                                          th:style="|background-color: ${post.color}; color:black;|"
+                                          th:text="${post.typeName}">類別</span>
                             </td>
                             <td th:text="${post.title}">標題</td>
                             <td th:if="${isAdmin}">
@@ -87,15 +87,15 @@
                         </tr>
 
                         <!-- 非置頂 -->
-                        <tr th:each="post, iterStat : ${posts}" th:if="${post.pin} != 1"
+                        <tr th:each="post, iterStat : ${postList}" th:if="${post.pin} != 1"
                             th:data-bs-toggle="modal" th:data-bs-target="${'#x' + post.id}">
                             <td class="postshow"><i class="bi bi-card-text"></i>
                                 <span th:text="${iterStat.index + 1}">1</span>
                             </td>
                             <td>
                                     <span class="badge"
-                                          th:style="|background-color: ${tagArray[post.type]}; color:black;|"
-                                          th:text="${typeArray[post.type]}">類別</span>
+                                          th:style="|background-color: ${post.color}; color:black;|"
+                                          th:text="${post.typeName}">類別</span>
                             </td>
                             <td th:text="${post.title}">標題</td>
                             <td th:if="${isAdmin}">
@@ -110,7 +110,7 @@
                         </tr>
 
                         <!-- Modal: one per post -->
-                        <div th:each="post : ${posts}">
+                        <div th:each="post : ${postList}">
                             <div class="modal fade" th:id="${'x' + post.id}" tabindex="-1" role="dialog"
                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">

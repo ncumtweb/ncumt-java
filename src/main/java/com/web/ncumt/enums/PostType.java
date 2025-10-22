@@ -17,7 +17,7 @@ public enum PostType {
     OTHER(2, "其他", "#9B90C2");
 
     private final int value;
-    private final String typeName;
+    private final String name;
     private final String color;
 
     /**

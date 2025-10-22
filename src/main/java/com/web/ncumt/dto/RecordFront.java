@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * 用於前端顯示的登山紀錄資料傳輸物件。
  */
 @Data
-public class RecordDTO {
+public class RecordFront {
 
     private Long id;
     private String name;
@@ -24,13 +24,13 @@ public class RecordDTO {
     private String categoryName;
 
     /**
-     * 從 Record 實體轉換為 RecordDTO。
+     * 從 Record 實體轉換為 RecordFront。
      *
      * @param record Record 實體
-     * @return RecordDTO 物件
+     * @return RecordFront 物件
      */
-    public static RecordDTO fromEntity(Record record) {
-        RecordDTO dto = new RecordDTO();
+    public static RecordFront fromEntity(Record record) {
+        RecordFront dto = new RecordFront();
         dto.setId(record.getId());
         dto.setName(record.getName());
         dto.setImage(record.getImage());

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * 用於前端顯示的公告資料傳輸物件。
  */
 @Data
-public class PostDTO {
+public class PostFront {
 
     private Long id;
     private Short pin;
@@ -23,13 +23,13 @@ public class PostDTO {
     private String color;
 
     /**
-     * 從 Post 實體轉換為 PostDTO。
+     * 從 Post 實體轉換為 PostFront。
      *
      * @param post Post 實體
-     * @return PostDTO 物件
+     * @return PostFront 物件
      */
-    public static PostDTO fromEntity(Post post) {
-        PostDTO dto = new PostDTO();
+    public static PostFront fromEntity(Post post) {
+        PostFront dto = new PostFront();
         dto.setId(post.getId());
         dto.setPin(post.getPin());
         dto.setUserId(post.getUserId());
@@ -39,7 +39,7 @@ public class PostDTO {
         dto.setCreatedAt(post.getCreatedAt());
 
         PostType postType = PostType.fromValue(post.getType());
-        dto.setTypeName(postType.getTypeName());
+        dto.setTypeName(postType.getName());
         dto.setColor(postType.getColor());
 
         return dto;

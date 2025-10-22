@@ -1,6 +1,7 @@
 package com.web.ncumt.service;
 
-import com.web.ncumt.dto.PostDTO;
+import com.web.ncumt.dto.PostFront;
+import com.web.ncumt.entity.Post;
 
 import java.util.List;
 
@@ -16,7 +17,14 @@ public interface PostService {
      * 一篇文章如果其 {@code expiredAt} 欄位為 {@code null} 或是在未來，則被視為有效。
      * </p>
      *
-     * @return 一個包含所有有效 {@link PostDTO} 物件的列表。
+     * @return 一個包含所有有效 {@link PostFront} 物件的列表。
      */
-    List<PostDTO> listActivePost();
+    List<PostFront> listActivePost();
+
+    /**
+     * 創建一篇新的公告。
+     *
+     * @param post 要創建的 Post 實體。
+     */
+    void createPost(Post post);
 }

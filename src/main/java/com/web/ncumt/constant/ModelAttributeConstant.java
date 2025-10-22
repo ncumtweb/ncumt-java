@@ -31,14 +31,21 @@ public final class ModelAttributeConstant {
      * 用於存放日曆事件列表的鍵名。
      */
     public static final String CALENDAR_EVENT_LIST = "calendarEventList";
-    /**
-     * 用於存放公告列表的鍵名。
-     */
-    public static final String POST_LIST = "postList";
+
     /**
      * 用於存放在頁尾顯示的最新活動紀錄列表的鍵名。
      */
     public static final String FOOTER_RECORD_LIST = "footerRecordList";
+
+    /**
+     * 用於存放公告列表的鍵名。
+     */
+    public static final String POST_LIST = "postList";
+
+    /**
+     * 用於存放公告表單的鍵名。
+     */
+    public static final String POST_FORM = "postForm";
 
     /**
      * 私有建構子，防止這個工具類別被實例化。

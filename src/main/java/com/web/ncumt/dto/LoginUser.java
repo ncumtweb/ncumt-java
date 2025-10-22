@@ -10,6 +10,12 @@ import lombok.Data;
 @Data
 @Builder
 public class LoginUser {
+
+    /**
+     * id
+     */
+    private Long id;
+
     /**
      * 使用者的中文姓名。
      */

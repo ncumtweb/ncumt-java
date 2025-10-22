@@ -1,6 +1,6 @@
 package com.web.ncumt.service.impl;
 
-import com.web.ncumt.dto.PostDTO;
+import com.web.ncumt.dto.PostFront;
 import com.web.ncumt.entity.Post;
 import com.web.ncumt.repository.PostRepository;
 import com.web.ncumt.service.PostService;
@@ -18,10 +18,16 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private PostRepository postRepository;
 
-    public List<PostDTO> listActivePost() {
+    @Override
+    public List<PostFront> listActivePost() {
         List<Post> posts = postRepository.findByExpiredAtAfterOrderByPinDescCreatedAtDesc(LocalDateTime.now());
         return posts.stream()
-                .map(PostDTO::fromEntity)
+                .map(PostFront::fromEntity)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void createPost(Post post) {
+        postRepository.save(post);
     }
 }

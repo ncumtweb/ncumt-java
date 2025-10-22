@@ -75,6 +75,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         HttpSession session = request.getSession();
 
         session.setAttribute(SessionConstant.CURRENT_LOGIN_USER, LoginUser.builder()
+                .id(user.getId())
                 .nameZh(user.getNameZh())
                 .role(Role.fromValue(user.getRole()))
                 .build());

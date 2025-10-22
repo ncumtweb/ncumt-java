@@ -1,6 +1,6 @@
 package com.web.ncumt.service.impl;
 
-import com.web.ncumt.dto.RecordDTO;
+import com.web.ncumt.dto.RecordFront;
 import com.web.ncumt.entity.Record;
 import com.web.ncumt.repository.RecordRepository;
 import com.web.ncumt.service.RecordService;
@@ -19,10 +19,10 @@ public class RecordServiceImpl implements RecordService {
     private RecordRepository recordRepository;
 
     @Override
-    public List<RecordDTO> listLatestRecord(int limit) {
+    public List<RecordFront> listLatestRecord(int limit) {
         List<Record> records = recordRepository.findAllByOrderByStartDateDesc(PageRequest.of(0, limit));
         return records.stream()
-                .map(RecordDTO::fromEntity)
+                .map(RecordFront::fromEntity)
                 .collect(Collectors.toList());
     }
 }

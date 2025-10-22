@@ -24,6 +24,12 @@ public final class URLConstant {
      */
     public static final String LOGOUT_URL = "/logout";
 
+
+    /**
+     * 創建公告的 URL (單數路徑，如果未使用可考慮移除)。
+     */
+    public static final String POST_CREATE = "/post/create";
+
     /**
      * 私有建構子，防止實例化。
      */
@@ -31,4 +37,12 @@ public final class URLConstant {
         // restrict instantiation
     }
 
+    /**
+     * 重新導向至指定 url
+     *
+     * @param url 要導向的 url
+     */
+    public static String redirectTo(String url) {
+        return "redirect:" + url;
+    }
 }

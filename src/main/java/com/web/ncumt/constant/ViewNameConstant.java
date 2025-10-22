@@ -21,6 +21,11 @@ public final class ViewNameConstant {
     public static final String LOGIN_OPTION = "portal/option";
 
     /**
+     * 創建公告的視圖名稱。
+     */
+    public static final String CREATE_POST = "post/create";
+
+    /**
      * 私有建構子，防止這個工具類別被實例化。
      */
     private ViewNameConstant() {

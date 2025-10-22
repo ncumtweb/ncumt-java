@@ -1207,19 +1207,19 @@ section {
     }
 }
 
-.contact .createRecordForm {
+.contact .createForm {
     box-shadow: 0 0 30px rgba(var(--color-black-rgb), 0.1);
     padding: 30px;
     background: var(--color-white);
 }
 
 @media (max-width: 640px) {
-    .contact .createRecordForm {
+    .contact .createForm {
         padding: 20px;
     }
 }
 
-.contact .createRecordForm .error-message {
+.contact .createForm .error-message {
     display: none;
     color: var(--color-white);
     background: var(--color-red);
@@ -1228,7 +1228,7 @@ section {
     font-weight: 600;
 }
 
-.contact .createRecordForm .result-message {
+.contact .createForm .result-message {
 
     color: #f55b6a;
     text-align: center;
@@ -1237,11 +1237,11 @@ section {
     font-weight: 600;
 }
 
-.contact .createRecordForm .error-message br + br {
+.contact .createForm .error-message br + br {
     margin-top: 25px;
 }
 
-.contact .createRecordForm .sent-message {
+.contact .createForm .sent-message {
     display: none;
     color: var(--color-white);
     background: var(--color-green);
@@ -1250,14 +1250,14 @@ section {
     font-weight: 600;
 }
 
-.contact .createRecordForm .loading {
+.contact .createForm .loading {
     display: none;
     background: var(--color-white);
     text-align: center;
     padding: 15px;
 }
 
-.contact .createRecordForm .loading:before {
+.contact .createForm .loading:before {
     content: "";
     display: inline-block;
     border-radius: 50%;
@@ -1269,23 +1269,23 @@ section {
     animation: animate-loading 1s linear infinite;
 }
 
-.contact .createRecordForm .form-group {
+.contact .createForm .form-group {
     margin-bottom: 20px;
 }
 
-.contact .createRecordForm input,
-.contact .createRecordForm textarea,
-.contact .createRecordForm select {
+.contact .createForm input,
+.contact .createForm textarea,
+.contact .createForm select {
     padding: 10px 14px;
     box-shadow: none;
     font-size: 15px;
 }
 
-.contact .createRecordForm #answer {
+.contact .createForm #answer {
     height: 200px;
 }
 
-.contact .createRecordForm .row button[type=button] {
+.contact .createForm .row button[type=button] {
     background: #AB3B3A;
     border: 1;
     padding: 10px 20px;
@@ -1294,11 +1294,11 @@ section {
     cursor: pointer;
 }
 
-.contact .createRecordForm button[type=button]:hover {
+.contact .createForm button[type=button]:hover {
     background: rgba(var(--color-primary-rgb), 0.8);
 }
 
-.contact .createRecordForm button[type=submit] {
+.contact .createForm button[type=submit] {
     background: var(--color-primary);
     border: 1;
     padding: 10px 20px;
@@ -1307,7 +1307,7 @@ section {
     cursor: pointer;
 }
 
-.contact .createRecordForm button[type=submit]:hover {
+.contact .createForm button[type=submit]:hover {
     background: rgba(var(--color-primary-rgb), 0.8);
 }
 
@@ -1553,10 +1553,6 @@ button.black[type=submit] {
     color: var(--color-white);
 }
 
-.ck-editor__editable {
-    min-height: 800px;
-}
-
 /* 普通狀態下不改變樣式 */
 .clickable-text {
 }
@@ -1572,4 +1568,10 @@ button.black[type=submit] {
 .course-desc p{
     text-indent: 2em;
     text-align: justify;
+}
+
+/*post*/
+
+.post .ck-editor__editable {
+    min-height: 200px;
 }

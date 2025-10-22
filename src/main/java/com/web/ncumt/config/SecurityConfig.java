@@ -51,20 +51,48 @@ public class SecurityConfig {
     private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     /**
-     * 定義並建立安全過濾器鏈 (Security Filter Chain)。
-     * <p>
-     * 這個 Bean 是 Spring Security 的核心，它定義了如何處理所有傳入的 HTTP 請求。
-     * </p>
+     * 設定並建立安全過濾器鏈 (Security Filter Chain)，此鏈定義了應用程式的 HTTP 安全性規則。
      *
-     * @param http HttpSecurity 物件，用於建立安全規則
-     * @return 設定好的 SecurityFilterChain
-     * @throws Exception 如果設定過程中發生錯誤
+     * <p>詳細設定如下：</p>
+     * <ul>
+     *   <li><b>CSRF 保護：</b> 針對 {@link URLConstant#FRONTEND_LOG_ERROR} 路徑停用 CSRF 保護，以允許前端日誌記錄。</li>
+     *   <li><b>請求授權：</b>
+     *     <ul>
+     *       <li>需要認證的 URL (如新增文章等) 定義在 {@link URLConstant#AUTHENTICATED_URL_ARRAY} 中。</li>
+     *       <li>所有其他請求都允許公開存取。</li>
+     *     </ul>
+     *   </li>
+     *   <li><b>OAuth2 登入：</b>
+     *     <ul>
+     *       <li>自訂登入頁面路徑為 {@link URLConstant#LOGIN_OPTION}。</li>
+     *       <li>登入成功後由 {@link CustomAuthenticationSuccessHandler} 處理。</li>
+     *     </ul>
+     *   </li>
+     *   <li><b>登出：</b>
+     *     <ul>
+     *       <li>登出 URL 為 {@link URLConstant#LOGOUT_URL}。</li>
+     *       <li>登出成功後由 {@link CustomLogoutSuccessHandler} 處理。</li>
+     *     </ul>
+     *   </li>
+     *   <li><b>例外處理：</b>
+     *     <ul>
+     *       <li>未經認證的存取請求將由 {@link CustomAuthenticationEntryPoint} 處理，引導使用者進行登入。</li>
+     *     </ul>
+     *   </li>
+     * </ul>
+     *
+     * @param http HttpSecurity 物件，用於 fluent API 風格的安全性設定。
+     * @return 設定完成的 {@link SecurityFilterChain} 實例。
+     * @throws Exception 如果設定過程中發生錯誤。
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers(URLConstant.FRONTEND_LOG_ERROR)
+                )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(URLConstant.POST_CREATE).authenticated()
+                        .requestMatchers(URLConstant.AUTHENTICATED_URL_ARRAY).authenticated()
                         .anyRequest().permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2

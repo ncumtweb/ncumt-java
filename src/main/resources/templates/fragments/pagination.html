@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!--
+    可重用的分頁組件
+
+    @param page Spring Data 的 Page 物件
+    @param url  分頁連結的基礎 URL
+-->
+<nav aria-label="Page navigation" th:fragment="pagination(page, url)" th:if="${page.totalPages > 1}">
+    <ul class="pagination justify-content-center">
+        <!-- 上一頁連結 -->
+        <li class="page-item" th:classappend="${page.first} ? 'disabled' : ''">
+            <a class="page-link" th:href="@{${url}(page=${page.number - 1})}">上一頁</a>
+        </li>
+
+        <!-- 頁碼 -->
+        <li class="page-item" th:classappend="${pageNumber == page.number} ? 'active' : ''"
+            th:each="pageNumber : ${#numbers.sequence(0, page.totalPages - 1)}">
+            <a class="page-link" th:href="@{${url}(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
+        </li>
+
+        <!-- 下一頁連結 -->
+        <li class="page-item" th:classappend="${page.last} ? 'disabled' : ''">
+            <a class="page-link" th:href="@{${url}(page=${page.number + 1})}">下一頁</a>
+        </li>
+    </ul>
+</nav>
+
+</body>
+</html>

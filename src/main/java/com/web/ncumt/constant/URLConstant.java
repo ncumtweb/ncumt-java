@@ -4,6 +4,12 @@ package com.web.ncumt.constant;
  * 提供 URL 中儲存的 key 常量。
  */
 public final class URLConstant {
+
+    /**
+     * 前端錯誤日誌的 URL。
+     */
+    public static final String FRONTEND_LOG_ERROR = "/frontend/log/error";
+
     /**
      * 首頁的 URL。
      */
@@ -26,9 +32,34 @@ public final class URLConstant {
 
 
     /**
-     * 創建公告的 URL (單數路徑，如果未使用可考慮移除)。
+     * 創建公告的 URL
      */
     public static final String POST_CREATE = "/post/create";
+
+    /**
+     * 編輯公告的 URL
+     */
+    public static final String POST_EDIT = "/post/edit/{id}";
+
+    /**
+     * 刪除公告的 URL
+     */
+    public static final String POST_DELETE = "/post/delete";
+
+    /**
+     * 公告列表的 URL
+     */
+    public static final String POST_LIST = "/post/list";
+
+    /**
+     * 需要認證才能存取的 URL 列表。
+     * 將所有需要認證的 URL 集中管理，方便維護。
+     */
+    public static final String[] AUTHENTICATED_URL_ARRAY = {
+            POST_CREATE,
+            POST_EDIT,
+            POST_DELETE
+    };
 
     /**
      * 私有建構子，防止實例化。

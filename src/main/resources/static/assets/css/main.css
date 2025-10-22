@@ -1207,19 +1207,20 @@ section {
     }
 }
 
-.contact .createForm {
+.contact .zenForm {
     box-shadow: 0 0 30px rgba(var(--color-black-rgb), 0.1);
     padding: 30px;
     background: var(--color-white);
+    border-radius: 10px; /* Added for rounded corners */
 }
 
 @media (max-width: 640px) {
-    .contact .createForm {
+    .contact .zenForm {
         padding: 20px;
     }
 }
 
-.contact .createForm .error-message {
+.contact .zenForm .error-message {
     display: none;
     color: var(--color-white);
     background: var(--color-red);
@@ -1228,7 +1229,7 @@ section {
     font-weight: 600;
 }
 
-.contact .createForm .result-message {
+.contact .zenForm .result-message {
 
     color: #f55b6a;
     text-align: center;
@@ -1237,11 +1238,11 @@ section {
     font-weight: 600;
 }
 
-.contact .createForm .error-message br + br {
+.contact .zenForm .error-message br + br {
     margin-top: 25px;
 }
 
-.contact .createForm .sent-message {
+.contact .zenForm .sent-message {
     display: none;
     color: var(--color-white);
     background: var(--color-green);
@@ -1250,14 +1251,14 @@ section {
     font-weight: 600;
 }
 
-.contact .createForm .loading {
+.contact .zenForm .loading {
     display: none;
     background: var(--color-white);
     text-align: center;
     padding: 15px;
 }
 
-.contact .createForm .loading:before {
+.contact .zenForm .loading:before {
     content: "";
     display: inline-block;
     border-radius: 50%;
@@ -1269,45 +1270,47 @@ section {
     animation: animate-loading 1s linear infinite;
 }
 
-.contact .createForm .form-group {
+.contact .zenForm .form-group {
     margin-bottom: 20px;
 }
 
-.contact .createForm input,
-.contact .createForm textarea,
-.contact .createForm select {
+.contact .zenForm input,
+.contact .zenForm textarea,
+.contact .zenForm select {
     padding: 10px 14px;
     box-shadow: none;
     font-size: 15px;
 }
 
-.contact .createForm #answer {
+.contact .zenForm #answer {
     height: 200px;
 }
 
-.contact .createForm .row button[type=button] {
-    background: #AB3B3A;
-    border: 1;
+.contact .zenForm .row button[type=button] {
+    background: var(--color-red);
+    border-radius: 10px;
+    border: 1px solid var(--color-red);
     padding: 10px 20px;
     color: #fff;
     transition: 0.4s;
     cursor: pointer;
 }
 
-.contact .createForm button[type=button]:hover {
+.contact .zenForm button[type=button]:hover {
     background: rgba(var(--color-primary-rgb), 0.8);
 }
 
-.contact .createForm button[type=submit] {
+.contact .zenForm button[type=submit] {
     background: var(--color-primary);
-    border: 1;
+    border-radius: 10px;
+    border: 1px solid var(--color-primary);
     padding: 10px 20px;
     color: #fff;
     transition: 0.4s;
     cursor: pointer;
 }
 
-.contact .createForm button[type=submit]:hover {
+.contact .zenForm button[type=submit]:hover {
     background: rgba(var(--color-primary-rgb), 0.8);
 }
 

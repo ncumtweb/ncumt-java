@@ -4,11 +4,17 @@ import com.web.ncumt.constant.ModelAttributeConstant;
 import com.web.ncumt.constant.URLConstant;
 import com.web.ncumt.constant.ViewNameConstant;
 import com.web.ncumt.dto.CalendarEvent;
+import com.web.ncumt.dto.PostFront;
 import com.web.ncumt.service.EventService;
 import com.web.ncumt.service.PostService;
 import com.web.ncumt.service.RecordService;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,21 +29,12 @@ import java.util.List;
 @Slf4j
 public class BasicController {
 
-    /**
-     * 用於操作活動紀錄的服務。
-     */
     @Autowired
     private RecordService recordService;
 
-    /**
-     * 用於操作文章的服務。
-     */
     @Autowired
     private PostService postService;
 
-    /**
-     * 用於操作事件的服務。
-     */
     @Autowired
     private EventService eventService;
 
@@ -45,15 +42,23 @@ public class BasicController {
      * 處理首頁請求。
      *
      * @param model Spring MVC 的 Model 物件
+     * @param session HTTP Session 物件
+     * @param pageable 分頁資訊
      * @return home 視圖名稱
      */
     @GetMapping(URLConstant.HOME)
-    public String home(Model model) {
+    public String home(Model model, HttpSession session,
+                       @PageableDefault(sort = {"pin", "createdAt"}, direction = Sort.Direction.DESC) Pageable pageable) {
+        // 原有邏輯
         model.addAttribute(ModelAttributeConstant.RECORD_LIST, recordService.listLatestRecord(5));
-        model.addAttribute(ModelAttributeConstant.POST_LIST, postService.listActivePost());
         model.addAttribute(ModelAttributeConstant.PAGE_TITLE, "首頁");
         List<CalendarEvent> calendarEventList = eventService.listIndexCalendarEvent();
         model.addAttribute(ModelAttributeConstant.CALENDAR_EVENT_LIST, calendarEventList);
+
+        // 公告分頁邏輯 (已改為只查詢有效公告)
+        Page<PostFront> postPage = postService.pageActivePost(pageable);
+        model.addAttribute(ModelAttributeConstant.POST_PAGE, postPage);
+
         return ViewNameConstant.HOME;
     }
 

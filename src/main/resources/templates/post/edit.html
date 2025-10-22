@@ -6,20 +6,22 @@
 <body>
 <main layout:fragment="content">
     <section class="contact mb-5 post" id="contact">
-        <div class="container" data-aos="fade-up">
+        <div class="container">
 
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h1 class="page-title">創建公告</h1>
+                    <h1 class="page-title">編輯公告</h1>
                 </div>
             </div>
             <!-- Start Form -->
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="form">
-                        <form class="zenForm" id="form" method="POST" th:action="@{/post/create}"
+                        <form class="zenForm" id="form" method="POST"
+                              th:action="@{/post/edit/{id}(id=${postId})}"
                               th:object="${postForm}">
                             <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                            <input name="id" th:value="${postId}" type="hidden"/>
 
                             <div class="form-group">
                                 <label for="title">公告標題</label>
@@ -36,6 +38,7 @@
                                           th:if="${#fields.hasErrors('*{type}')}"></span>
                                     <select class="form-select" id="type" th:field="*{type}">
                                         <option disabled selected value="">請選擇公告類別</option>
+                                        <!-- 迭代 PostType enum，使用其 value 和 name -->
                                         <option th:each="postType : ${T(com.web.ncumt.enums.PostType).values()}"
                                                 th:text="${postType.name}"
                                                 th:value="${postType.value}">隊伍相關
@@ -54,10 +57,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="expired_at">過期時間</label>
+                                <label for="expiredAt">過期時間</label>
                                 <span class="text-danger d-block" th:errors="*{expiredAt}"
                                       th:if="${#fields.hasErrors('*{expiredAt}')}"></span>
-                                <input class="form-control" id="expired_at" th:field="*{expiredAt}"
+                                <input class="form-control" id="expiredAt" th:field="*{expiredAt}"
                                        type="datetime-local">
                             </div>
                             <div class="form-group">
@@ -69,7 +72,7 @@
 
                             <div class="row">
                                 <div class="text-center">
-                                    <button type="submit">新增公告</button>
+                                    <button type="submit">更新公告</button>
                                 </div>
                             </div>
                         </form>

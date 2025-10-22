@@ -26,6 +26,21 @@ public final class ViewNameConstant {
     public static final String CREATE_POST = "post/create";
 
     /**
+     * 公告列表的視圖名稱。
+     */
+    public static final String POST_LIST = "post/list";
+
+    /**
+     * 編輯公告的視圖名稱。
+     */
+    public static final String POST_EDIT = "post/edit";
+
+    /**
+     * 公告詳細資訊的視圖名稱。
+     */
+    public static final String POST_DETAIL = "post/detail";
+
+    /**
      * 私有建構子，防止這個工具類別被實例化。
      */
     private ViewNameConstant() {

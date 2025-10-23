@@ -1207,19 +1207,20 @@ section {
     }
 }
 
-.contact .createRecordForm {
+.contact .zenForm {
     box-shadow: 0 0 30px rgba(var(--color-black-rgb), 0.1);
     padding: 30px;
     background: var(--color-white);
+    border-radius: 10px; /* Added for rounded corners */
 }
 
 @media (max-width: 640px) {
-    .contact .createRecordForm {
+    .contact .zenForm {
         padding: 20px;
     }
 }
 
-.contact .createRecordForm .error-message {
+.contact .zenForm .error-message {
     display: none;
     color: var(--color-white);
     background: var(--color-red);
@@ -1228,7 +1229,7 @@ section {
     font-weight: 600;
 }
 
-.contact .createRecordForm .result-message {
+.contact .zenForm .result-message {
 
     color: #f55b6a;
     text-align: center;
@@ -1237,11 +1238,11 @@ section {
     font-weight: 600;
 }
 
-.contact .createRecordForm .error-message br + br {
+.contact .zenForm .error-message br + br {
     margin-top: 25px;
 }
 
-.contact .createRecordForm .sent-message {
+.contact .zenForm .sent-message {
     display: none;
     color: var(--color-white);
     background: var(--color-green);
@@ -1250,14 +1251,14 @@ section {
     font-weight: 600;
 }
 
-.contact .createRecordForm .loading {
+.contact .zenForm .loading {
     display: none;
     background: var(--color-white);
     text-align: center;
     padding: 15px;
 }
 
-.contact .createRecordForm .loading:before {
+.contact .zenForm .loading:before {
     content: "";
     display: inline-block;
     border-radius: 50%;
@@ -1269,45 +1270,47 @@ section {
     animation: animate-loading 1s linear infinite;
 }
 
-.contact .createRecordForm .form-group {
+.contact .zenForm .form-group {
     margin-bottom: 20px;
 }
 
-.contact .createRecordForm input,
-.contact .createRecordForm textarea,
-.contact .createRecordForm select {
+.contact .zenForm input,
+.contact .zenForm textarea,
+.contact .zenForm select {
     padding: 10px 14px;
     box-shadow: none;
     font-size: 15px;
 }
 
-.contact .createRecordForm #answer {
+.contact .zenForm #answer {
     height: 200px;
 }
 
-.contact .createRecordForm .row button[type=button] {
-    background: #AB3B3A;
-    border: 1;
+.contact .zenForm .row button[type=button] {
+    background: var(--color-red);
+    border-radius: 10px;
+    border: 1px solid var(--color-red);
     padding: 10px 20px;
     color: #fff;
     transition: 0.4s;
     cursor: pointer;
 }
 
-.contact .createRecordForm button[type=button]:hover {
+.contact .zenForm button[type=button]:hover {
     background: rgba(var(--color-primary-rgb), 0.8);
 }
 
-.contact .createRecordForm button[type=submit] {
+.contact .zenForm button[type=submit] {
     background: var(--color-primary);
-    border: 1;
+    border-radius: 10px;
+    border: 1px solid var(--color-primary);
     padding: 10px 20px;
     color: #fff;
     transition: 0.4s;
     cursor: pointer;
 }
 
-.contact .createRecordForm button[type=submit]:hover {
+.contact .zenForm button[type=submit]:hover {
     background: rgba(var(--color-primary-rgb), 0.8);
 }
 
@@ -1553,10 +1556,6 @@ button.black[type=submit] {
     color: var(--color-white);
 }
 
-.ck-editor__editable {
-    min-height: 800px;
-}
-
 /* 普通狀態下不改變樣式 */
 .clickable-text {
 }
@@ -1572,4 +1571,10 @@ button.black[type=submit] {
 .course-desc p{
     text-indent: 2em;
     text-align: justify;
+}
+
+/*post*/
+
+.post .ck-editor__editable {
+    min-height: 200px;
 }

@@ -1,47 +1,57 @@
 package com.web.ncumt.controller.advice;
 
+import com.web.ncumt.constant.ModelAttributeConstant;
 import com.web.ncumt.constant.SessionConstant;
 import com.web.ncumt.dto.LoginUser;
+import com.web.ncumt.dto.RecordFront;
+import com.web.ncumt.service.RecordService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-/**
- * 全域的 Controller Advice，用於將通用資料添加到 Model 中。
- */
+import java.util.List;
+
 @ControllerAdvice
 @SuppressWarnings("unused")
 public class GlobalControllerAdvice {
 
-    /**
-     * 從 HTTP Session 中獲取當前登入的使用者資訊，並將其添加到 Model 中。
-     * <p>
-     * 這個方法會在每個請求之前執行，將 session 中的 {@link SessionConstant#CURRENT_LOGIN_USER} 屬性
-     * (一個 {@link LoginUser} 實體) 添加到 Model 中。
-     * 這樣，所有 Thymeleaf 模板都可以透過 {@link SessionConstant#CURRENT_LOGIN_USER} 訪問登入者的資料。
-     *
-     * @param session HTTP Session 物件。
-     * @return 當前登入的 {@link LoginUser} 實體，如果未登入或 session 中不存在，則為 null。
-     */
-    @ModelAttribute(SessionConstant.CURRENT_LOGIN_USER)
-    public LoginUser addCurrentUserToModel(HttpSession session) {
-        return (LoginUser) session.getAttribute(SessionConstant.CURRENT_LOGIN_USER);
-    }
+    @Autowired
+    private RecordService recordService;
 
     /**
-     * 判斷當前登入的使用者是否為管理員，並將結果添加到 Model 中。
-     * <p>
-     * 如果使用者已登入且其 role > 0，則 "isAdmin" 為 true。
+     * 將使用者狀態（是否為管理員、是否為社員）添加到 Model 中，供所有視圖使用。
      *
      * @param session HTTP Session 物件。
-     * @return 如果是管理員則為 true，否則為 false。
+     * @param model   Spring MVC 的 Model 物件。
      */
-    @ModelAttribute("isAdmin")
-    public boolean addIsAdminToModel(HttpSession session) {
-        LoginUser currentUser = (LoginUser) session.getAttribute(SessionConstant.CURRENT_LOGIN_USER);
-        if (currentUser != null && currentUser.getRole() != null) {
-            return currentUser.getRole() > 0;
+    @ModelAttribute
+    public void addUserStatusToModel(HttpSession session, Model model) {
+        LoginUser currentLoginUser = (LoginUser) session.getAttribute(SessionConstant.CURRENT_LOGIN_USER);
+
+        boolean isAdmin = false;
+        boolean isClubMember = false;
+
+        if (currentLoginUser != null && currentLoginUser.getRole() != null) {
+            model.addAttribute(ModelAttributeConstant.CURRENT_LOGIN_USER, currentLoginUser);
+            isAdmin = currentLoginUser.getRole().isAdmin();
+            isClubMember = currentLoginUser.getRole().isClubMember();
         }
-        return false;
+
+        model.addAttribute(ModelAttributeConstant.IS_ADMIN, isAdmin);
+        model.addAttribute(ModelAttributeConstant.IS_CLUB_MEMBER, isClubMember);
+    }
+
+
+    /**
+     * 提供頁尾顯示的最新活動紀錄列表。
+     *
+     * @return 最新的 5 筆活動紀錄
+     */
+    @ModelAttribute(ModelAttributeConstant.FOOTER_RECORD_LIST)
+    public List<RecordFront> footerRecordList() {
+        List<RecordFront> recordList = recordService.listLatestRecord(5);
+        return recordService.listLatestRecord(5);
     }
 }

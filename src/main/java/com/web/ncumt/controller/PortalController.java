@@ -1,8 +1,6 @@
 package com.web.ncumt.controller;
 
-import com.web.ncumt.constant.HeaderConstant;
-import com.web.ncumt.constant.SessionConstant;
-import com.web.ncumt.constant.URLConstant;
+import com.web.ncumt.constant.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -30,11 +28,11 @@ public class PortalController {
      */
     @GetMapping(URLConstant.LOGIN_OPTION)
     public String portalOption(Model model, HttpServletRequest request) {
-        model.addAttribute("pageTitle", "登入選項");
+        model.addAttribute(ModelAttributeConstant.PAGE_TITLE, "登入選項");
         String referer = request.getHeader(HeaderConstant.REFERER);
         if (referer != null && !referer.contains(URLConstant.LOGIN_OPTION)) {
             request.getSession().setAttribute(SessionConstant.PRE_LOGIN_REFERER_URL, referer);
         }
-        return "portal/option";
+        return ViewNameConstant.LOGIN_OPTION;
     }
 }

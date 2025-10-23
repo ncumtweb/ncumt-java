@@ -1,5 +1,6 @@
 package com.web.ncumt.service.impl;
 
+import com.web.ncumt.dto.RecordFront;
 import com.web.ncumt.entity.Record;
 import com.web.ncumt.repository.RecordRepository;
 import com.web.ncumt.service.RecordService;
@@ -51,12 +52,12 @@ class RecordServiceImplTest {
         recordRepository.saveAll(List.of(olderRecord, oldestRecord, recentRecord));
 
         // 行動
-        List<Record> latestRecords = recordService.listLatestRecord(2);
+        List<RecordFront> latestRecords = recordService.listLatestRecord(2);
 
         // 斷言
         assertThat(latestRecords)
                 .hasSize(2)
-                .extracting(Record::getName)
+                .extracting(RecordFront::getName)
                 .containsExactly("最近的活動", "較舊的活動");
     }
 
@@ -75,12 +76,12 @@ class RecordServiceImplTest {
         recordRepository.saveAll(List.of(record1, record2));
 
         // 行動
-        List<Record> latestRecords = recordService.listLatestRecord(5);
+        List<RecordFront> latestRecords = recordService.listLatestRecord(5);
 
         // 斷言
         assertThat(latestRecords)
                 .hasSize(2)
-                .extracting(Record::getName)
+                .extracting(RecordFront::getName)
                 .containsExactly("活動1", "活動2");
     }
 
@@ -90,7 +91,7 @@ class RecordServiceImplTest {
         // 編排 - 資料庫已由 @BeforeEach 清空
 
         // 行動
-        List<Record> latestRecords = recordService.listLatestRecord(5);
+        List<RecordFront> latestRecords = recordService.listLatestRecord(5);
 
         // 斷言
         assertThat(latestRecords).isEmpty();

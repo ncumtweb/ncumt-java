@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html layout:decorate="~{/layout/main.html}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<main layout:fragment="content">
+    <section class="contact mb-5 post" id="contact">
+        <div class="container" data-aos="fade-up">
+
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h1 class="page-title">創建公告</h1>
+                </div>
+            </div>
+            <!-- Start Form -->
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="form">
+                        <form class="zenForm" id="form" method="POST" th:action="@{/post/create}"
+                              th:object="${postForm}">
+                            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+
+                            <div class="form-group">
+                                <label for="title">公告標題</label>
+                                <span class="text-danger d-block" th:errors="*{title}"
+                                      th:if="${#fields.hasErrors('*{title}')}"></span>
+                                <input class="form-control" id="title" placeholder="請輸入公告標題" th:field="*{title}"
+                                       type="text">
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="type">公告類別</label>
+                                    <span class="text-danger d-block" th:errors="*{type}"
+                                          th:if="${#fields.hasErrors('*{type}')}"></span>
+                                    <select class="form-select" id="type" th:field="*{type}">
+                                        <option disabled selected value="">請選擇公告類別</option>
+                                        <option th:each="postType : ${T(com.web.ncumt.enums.PostType).values()}"
+                                                th:text="${postType.name}"
+                                                th:value="${postType.value}">隊伍相關
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="pin">公告置頂</label>
+                                    <span class="text-danger d-block" th:errors="*{pin}"
+                                          th:if="${#fields.hasErrors('*{pin}')}"></span>
+                                    <select class="form-select" id="pin" th:field="*{pin}">
+                                        <option disabled selected value="">請選擇是否置頂</option>
+                                        <option value="0">非置頂</option>
+                                        <option value="1">置頂</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="expired_at">過期時間</label>
+                                <span class="text-danger d-block" th:errors="*{expiredAt}"
+                                      th:if="${#fields.hasErrors('*{expiredAt}')}"></span>
+                                <input class="form-control" id="expired_at" th:field="*{expiredAt}"
+                                       type="datetime-local">
+                            </div>
+                            <div class="form-group">
+                                <label for="content">內容</label>
+                                <span class="text-danger d-block" th:errors="*{content}"
+                                      th:if="${#fields.hasErrors('*{content}')}"></span>
+                                <textarea class="form-control" id="content" th:field="*{content}"></textarea>
+                            </div>
+
+                            <div class="row">
+                                <div class="text-center">
+                                    <button type="submit">新增公告</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- End Form -->
+        </div>
+    </section>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/classic/ckeditor.js"></script>
+    <script src="/assets/js/postCKEditor.js" type="module"></script>
+</main>
+</body>
+</html>

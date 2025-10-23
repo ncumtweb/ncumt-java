@@ -80,7 +80,7 @@ public class PostController {
     }
 
     @GetMapping("/list")
-    public String listPosts(Model model, @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String listPosts(Model model, @PageableDefault(sort = Post.Fields.createdAt, direction = Sort.Direction.DESC) Pageable pageable) {
         model.addAttribute(ModelAttributeConstant.PAGE_TITLE, "公告列表");
         Page<PostFront> postPage = postService.pageAllPost(pageable);
         model.addAttribute(ModelAttributeConstant.POST_PAGE, postPage);

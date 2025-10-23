@@ -18,6 +18,7 @@ import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -46,6 +47,43 @@ class PostServiceImplTest {
         testUser.setNameZh("測試人員");
         testUser.setStudentId("109502501");
         testUser = userRepository.save(testUser);
+    }
+
+    @Test
+    @DisplayName("當 ID 存在且文章未過期時，應回傳包含正確 PostFront 的 Optional")
+    void getPostFrontById_whenPostExistsAndIsActive_shouldReturnPostFront() {
+        // 編排
+        Post activePost = new Post();
+        activePost.setTitle("一篇有效的文章");
+        activePost.setContent("文章內容");
+        activePost.setExpiredAt(LocalDateTime.now().plusDays(1));
+        activePost.setCreateUser(testUser.getId());
+        activePost.setModifyUser(testUser.getId());
+        activePost = postRepository.save(activePost);
+
+        // 行動
+        Optional<PostFront> result = postService.getPostFrontById(activePost.getId());
+
+        // 斷言
+        assertThat(result).isPresent();
+        result.ifPresent(postFront -> {
+            assertThat(postFront.getTitle()).isEqualTo("一篇有效的文章");
+            assertThat(postFront.getContent()).isEqualTo("文章內容");
+            assertThat(postFront.getCreateUserName()).isEqualTo("測試人員");
+        });
+    }
+
+    @Test
+    @DisplayName("當 ID 不存在時，應回傳空的 Optional")
+    void getPostFrontById_whenPostNotFound_shouldReturnEmpty() {
+        // 編排
+        long nonExistentId = 999L;
+
+        // 行動
+        Optional<PostFront> result = postService.getPostFrontById(nonExistentId);
+
+        // 斷言
+        assertThat(result).isNotPresent();
     }
 
     @Test

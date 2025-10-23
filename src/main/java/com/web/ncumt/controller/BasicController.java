@@ -5,6 +5,7 @@ import com.web.ncumt.constant.URLConstant;
 import com.web.ncumt.constant.ViewNameConstant;
 import com.web.ncumt.dto.CalendarEvent;
 import com.web.ncumt.dto.PostFront;
+import com.web.ncumt.entity.Post;
 import com.web.ncumt.service.EventService;
 import com.web.ncumt.service.PostService;
 import com.web.ncumt.service.RecordService;
@@ -48,7 +49,7 @@ public class BasicController {
      */
     @GetMapping(URLConstant.HOME)
     public String home(Model model, HttpSession session,
-                       @PageableDefault(sort = {"pin", "createdAt"}, direction = Sort.Direction.DESC) Pageable pageable) {
+                       @PageableDefault(sort = {Post.Fields.pin, Post.Fields.createdAt}, direction = Sort.Direction.DESC) Pageable pageable) {
         // 原有邏輯
         model.addAttribute(ModelAttributeConstant.RECORD_LIST, recordService.listLatestRecord(5));
         model.addAttribute(ModelAttributeConstant.PAGE_TITLE, "首頁");

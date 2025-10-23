@@ -44,7 +44,7 @@ public final class URLConstant {
     /**
      * 刪除公告的 URL
      */
-    public static final String POST_DELETE = "/post/delete";
+    public static final String POST_DELETE = "/post/delete/{id}";
 
     /**
      * 公告列表的 URL

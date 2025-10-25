@@ -1,7 +1,10 @@
 package com.web.ncumt.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.sql.Time;
 import java.time.LocalDateTime;
@@ -12,14 +15,8 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "\"user\"")
-public class User {
-
-    /**
-     * 使用者的唯一識別碼。
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+public class User extends BaseEntity {
 
     /**
      * 學號
@@ -35,16 +32,6 @@ public class User {
      * 電子信箱
      */
     private String email;
-
-    /**
-     * 帳號建立時間。
-     */
-    private LocalDateTime createdAt;
-
-    /**
-     * 帳號最後更新時間。
-     */
-    private LocalDateTime updatedAt;
 
     /**
      * 英文名字
@@ -81,16 +68,6 @@ public class User {
      * Remember Token
      */
     private String rememberToken;
-
-    /**
-     * 建立者 ID
-     */
-    private Long createUser;
-
-    /**
-     * 更新者 ID
-     */
-    private Long modifyUser;
 
     /**
      * 系級

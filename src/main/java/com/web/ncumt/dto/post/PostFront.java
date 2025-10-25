@@ -1,4 +1,4 @@
-package com.web.ncumt.dto;
+package com.web.ncumt.dto.post;
 
 import com.web.ncumt.constant.DateTimeFormatConstant;
 import com.web.ncumt.entity.Post;

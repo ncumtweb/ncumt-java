@@ -1,4 +1,4 @@
-package com.web.ncumt.dto;
+package com.web.ncumt.dto.user;
 
 import com.web.ncumt.enums.Role;
 import lombok.Builder;

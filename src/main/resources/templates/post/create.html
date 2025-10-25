@@ -54,10 +54,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="expired_at">過期時間</label>
+                                <label for="expiredAt">過期時間</label>
                                 <span class="text-danger d-block" th:errors="*{expiredAt}"
                                       th:if="${#fields.hasErrors('*{expiredAt}')}"></span>
-                                <input class="form-control" id="expired_at" th:field="*{expiredAt}"
+                                <input class="form-control" id="expiredAt" th:field="*{expiredAt}"
                                        type="datetime-local">
                             </div>
                             <div class="form-group">

@@ -1,7 +1,9 @@
 package com.web.ncumt.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 
@@ -10,14 +12,8 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Data
-public class Event {
-
-    /**
-     * 事件的唯一識別碼。
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+public class Event extends BaseEntity {
 
     /**
      * 事件的標題。
@@ -37,27 +33,8 @@ public class Event {
     private LocalDateTime end;
 
     /**
-     * 事件的建立時間。
-     */
-    private LocalDateTime createdAt;
-
-    /**
-     * 事件的最後更新時間。
-     */
-    private LocalDateTime updatedAt;
-
-    /**
      * 事件的分類。
      */
     private Integer category;
 
-    /**
-     * 建立此事件的使用者 ID。
-     */
-    private Long createUser;
-
-    /**
-     * 最後修改此事件的使用者 ID。
-     */
-    private Long modifyUser;
 }

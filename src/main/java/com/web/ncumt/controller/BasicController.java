@@ -4,7 +4,8 @@ import com.web.ncumt.constant.ModelAttributeConstant;
 import com.web.ncumt.constant.URLConstant;
 import com.web.ncumt.constant.ViewNameConstant;
 import com.web.ncumt.dto.CalendarEvent;
-import com.web.ncumt.dto.PostFront;
+import com.web.ncumt.dto.post.PostFront;
+import com.web.ncumt.entity.BaseEntity;
 import com.web.ncumt.entity.Post;
 import com.web.ncumt.service.EventService;
 import com.web.ncumt.service.PostService;
@@ -49,14 +50,13 @@ public class BasicController {
      */
     @GetMapping(URLConstant.HOME)
     public String home(Model model, HttpSession session,
-                       @PageableDefault(sort = {Post.Fields.pin, Post.Fields.createdAt}, direction = Sort.Direction.DESC) Pageable pageable) {
-        // 原有邏輯
+                       @PageableDefault(sort = {Post.Fields.pin, BaseEntity.Fields.createdAt}, direction = Sort.Direction.DESC) Pageable pageable) {
+
         model.addAttribute(ModelAttributeConstant.RECORD_LIST, recordService.listLatestRecord(5));
         model.addAttribute(ModelAttributeConstant.PAGE_TITLE, "首頁");
         List<CalendarEvent> calendarEventList = eventService.listIndexCalendarEvent();
         model.addAttribute(ModelAttributeConstant.CALENDAR_EVENT_LIST, calendarEventList);
 
-        // 公告分頁邏輯 (已改為只查詢有效公告)
         Page<PostFront> postPage = postService.pageActivePost(pageable);
         model.addAttribute(ModelAttributeConstant.POST_PAGE, postPage);
 

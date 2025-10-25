@@ -1,4 +1,4 @@
-package com.web.ncumt.dto;
+package com.web.ncumt.dto.user;
 
 import lombok.Data;
 

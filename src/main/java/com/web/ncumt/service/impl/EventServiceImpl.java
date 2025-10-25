@@ -13,14 +13,16 @@ import java.util.List;
 
 @Service
 @SuppressWarnings("unused")
-public class EventServiceImpl implements EventService {
+public class EventServiceImpl extends BaseServiceImpl<Event, EventRepository> implements EventService {
 
     @Autowired
-    private EventRepository eventRepository;
+    public EventServiceImpl(EventRepository eventRepository) {
+        super(eventRepository);
+    }
 
     @Override
     public List<CalendarEvent> listIndexCalendarEvent() {
-        List<Event> eventList = eventRepository.findAll();
+        List<Event> eventList = repository.findAll();
         List<CalendarEvent> calendarEventList = new ArrayList<>();
 
         for (Event event : eventList) {

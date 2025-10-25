@@ -1,6 +1,7 @@
 package com.web.ncumt.service.impl;
 
-import com.web.ncumt.dto.NcuUser;
+import com.web.ncumt.config.IntegrationTest;
+import com.web.ncumt.dto.user.NcuUser;
 import com.web.ncumt.entity.User;
 import com.web.ncumt.repository.UserRepository;
 import com.web.ncumt.service.UserService;
@@ -8,14 +9,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * {@link UserServiceImpl} 的整合測試，使用 H2 資料庫。
  */
-@SpringBootTest
+@IntegrationTest
 @SuppressWarnings("unused")
 class UserServiceImplTest {
 

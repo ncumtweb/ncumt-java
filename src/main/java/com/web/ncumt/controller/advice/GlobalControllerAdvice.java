@@ -2,8 +2,8 @@ package com.web.ncumt.controller.advice;
 
 import com.web.ncumt.constant.ModelAttributeConstant;
 import com.web.ncumt.constant.SessionConstant;
-import com.web.ncumt.dto.LoginUser;
 import com.web.ncumt.dto.RecordFront;
+import com.web.ncumt.dto.user.LoginUser;
 import com.web.ncumt.service.RecordService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;

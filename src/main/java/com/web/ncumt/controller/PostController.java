@@ -4,9 +4,10 @@ import com.web.ncumt.constant.ModelAttributeConstant;
 import com.web.ncumt.constant.SessionConstant;
 import com.web.ncumt.constant.URLConstant;
 import com.web.ncumt.constant.ViewNameConstant;
-import com.web.ncumt.dto.LoginUser;
-import com.web.ncumt.dto.PostForm;
-import com.web.ncumt.dto.PostFront;
+import com.web.ncumt.dto.post.PostForm;
+import com.web.ncumt.dto.post.PostFront;
+import com.web.ncumt.dto.user.LoginUser;
+import com.web.ncumt.entity.BaseEntity;
 import com.web.ncumt.entity.Post;
 import com.web.ncumt.helper.ToastMessageHelper;
 import com.web.ncumt.service.PostService;
@@ -41,8 +42,9 @@ public class PostController {
     @GetMapping("/create")
     public String showCreatePostForm(Model model) {
         model.addAttribute(ModelAttributeConstant.PAGE_TITLE, "創建公告");
+        PostForm postForm = new PostForm();
         if (!model.containsAttribute(ModelAttributeConstant.POST_FORM)) {
-            model.addAttribute(ModelAttributeConstant.POST_FORM, new PostForm());
+            model.addAttribute(ModelAttributeConstant.POST_FORM, postForm);
         }
         return ViewNameConstant.CREATE_POST;
     }
@@ -66,21 +68,17 @@ public class PostController {
         post.setPin(postForm.getPin());
         post.setExpiredAt(postForm.getExpiredAt());
         post.setContent(postForm.getContent());
-        post.setCreatedAt(LocalDateTime.now());
-        post.setUpdatedAt(LocalDateTime.now());
         post.setUserId(loginUser.getId().toString());
-        post.setCreateUser(loginUser.getId());
-        post.setModifyUser(loginUser.getId());
 
-        postService.createPost(post);
+        postService.save(post);
 
         toastMessageHelper.addSuccessMessage(session, "新增公告成功");
 
-        return URLConstant.redirectTo(URLConstant.POST_CREATE);
+        return URLConstant.redirectTo(URLConstant.POST_LIST);
     }
 
     @GetMapping("/list")
-    public String listPosts(Model model, @PageableDefault(sort = Post.Fields.createdAt, direction = Sort.Direction.DESC) Pageable pageable) {
+    public String listPosts(Model model, @PageableDefault(sort = BaseEntity.Fields.createdAt, direction = Sort.Direction.DESC) Pageable pageable) {
         model.addAttribute(ModelAttributeConstant.PAGE_TITLE, "公告列表");
         Page<PostFront> postPage = postService.pageAllPost(pageable);
         model.addAttribute(ModelAttributeConstant.POST_PAGE, postPage);
@@ -89,9 +87,10 @@ public class PostController {
     }
 
     @GetMapping("/detail/{id}")
-    public String showDetail(@PathVariable("id") Long id, Model model) {
+    public String showDetail(@PathVariable("id") Long id, HttpSession session, Model model) {
         Optional<PostFront> postFrontOptional = postService.getPostFrontById(id);
         if (postFrontOptional.isEmpty()) {
+            toastMessageHelper.addErrorMessage(session, "公告不存在");
             return URLConstant.redirectTo(URLConstant.POST_LIST);
         }
 
@@ -101,9 +100,10 @@ public class PostController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable("id") Long id, Model model) {
-        Optional<Post> postOptional = postService.getPostById(id);
+    public String showEditForm(@PathVariable("id") Long id, HttpSession session, Model model) {
+        Optional<Post> postOptional = postService.findById(id);
         if (postOptional.isEmpty()) {
+            toastMessageHelper.addErrorMessage(session, "公告不存在");
             return URLConstant.redirectTo(URLConstant.POST_LIST);
         }
 
@@ -137,11 +137,11 @@ public class PostController {
 
         LoginUser loginUser = (LoginUser) session.getAttribute(SessionConstant.CURRENT_LOGIN_USER);
 
-        Optional<Post> postOptional = postService.getPostById(id);
+        Optional<Post> postOptional = postService.findById(id);
         if (postOptional.isEmpty()) {
             toastMessageHelper.addErrorMessage(session, "公告不存在");
             log.warn("post id {} note exists", id);
-            return URLConstant.redirectTo(URLConstant.HOME);
+            return URLConstant.redirectTo(URLConstant.POST_LIST);
         }
 
         Post post = postOptional.get();
@@ -153,7 +153,7 @@ public class PostController {
         post.setUpdatedAt(LocalDateTime.now());
         post.setModifyUser(loginUser.getId());
 
-        postService.updatePost(post);
+        postService.save(post);
 
         toastMessageHelper.addSuccessMessage(session, "更新公告成功");
 
@@ -162,7 +162,7 @@ public class PostController {
 
     @PostMapping("/delete/{id}")
     public String deletePost(@PathVariable("id") Long id, HttpSession session) {
-        postService.deletePost(id);
+        postService.deleteById(id);
         toastMessageHelper.addSuccessMessage(session, "刪除公告成功");
         return URLConstant.redirectTo(URLConstant.POST_LIST);
     }

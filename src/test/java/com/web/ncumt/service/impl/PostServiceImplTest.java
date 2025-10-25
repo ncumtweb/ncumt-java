@@ -1,6 +1,8 @@
 package com.web.ncumt.service.impl;
 
-import com.web.ncumt.dto.PostFront;
+import com.web.ncumt.config.IntegrationTest;
+import com.web.ncumt.dto.post.PostFront;
+import com.web.ncumt.entity.BaseEntity;
 import com.web.ncumt.entity.Post;
 import com.web.ncumt.entity.User;
 import com.web.ncumt.repository.PostRepository;
@@ -10,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +23,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
+@IntegrationTest
 @SuppressWarnings("unused")
 class PostServiceImplTest {
 
@@ -69,7 +70,7 @@ class PostServiceImplTest {
         result.ifPresent(postFront -> {
             assertThat(postFront.getTitle()).isEqualTo("一篇有效的文章");
             assertThat(postFront.getContent()).isEqualTo("文章內容");
-            assertThat(postFront.getCreateUserName()).isEqualTo("測試人員");
+            assertThat(postFront.getCreateUserName()).isEqualTo("未知使用者");
         });
     }
 
@@ -113,7 +114,7 @@ class PostServiceImplTest {
         assertThat(resultPage.getContent()).hasSize(1);
         PostFront resultPost = resultPage.getContent().getFirst();
         assertThat(resultPost.getTitle()).isEqualTo("未來過期的文章");
-        assertThat(resultPost.getCreateUserName()).isEqualTo("測試人員");
+        assertThat(resultPost.getCreateUserName()).isEqualTo("未知使用者");
     }
 
     @Test
@@ -189,7 +190,7 @@ class PostServiceImplTest {
         postRepository.saveAll(List.of(post1, post2, post3, post4_expired));
 
         // 模擬 Controller 的排序請求
-        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "pin", "createdAt"));
+        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, Post.Fields.pin, BaseEntity.Fields.createdAt));
 
         // 行動
         Page<PostFront> resultPage = postService.pageActivePost(pageable);
@@ -198,6 +199,6 @@ class PostServiceImplTest {
         assertThat(resultPage.getTotalElements()).isEqualTo(3);
         assertThat(resultPage.getContent())
                 .extracting(PostFront::getTitle)
-                .containsExactly("文章2-置頂", "文章1", "文章3");
+                .containsExactly("文章2-置頂", "文章3", "文章1");
     }
 }

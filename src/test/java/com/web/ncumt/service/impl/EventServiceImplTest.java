@@ -1,5 +1,6 @@
 package com.web.ncumt.service.impl;
 
+import com.web.ncumt.config.IntegrationTest;
 import com.web.ncumt.dto.CalendarEvent;
 import com.web.ncumt.entity.Event;
 import com.web.ncumt.enums.EventCategory;
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.tuple;
 /**
  * {@link EventServiceImpl} 的整合測試，使用 H2 資料庫。
  */
-@SpringBootTest
+@IntegrationTest
 @SuppressWarnings("unused")
 class EventServiceImplTest {
 

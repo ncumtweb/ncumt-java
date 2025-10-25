@@ -1,5 +1,6 @@
 package com.web.ncumt.service.impl;
 
+import com.web.ncumt.config.IntegrationTest;
 import com.web.ncumt.dto.RecordFront;
 import com.web.ncumt.entity.Record;
 import com.web.ncumt.repository.RecordRepository;
@@ -8,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * {@link RecordServiceImpl} 的整合測試，使用 H2 資料庫。
  */
-@SpringBootTest
+@IntegrationTest
 @SuppressWarnings("unused")
 class RecordServiceImplTest {
 

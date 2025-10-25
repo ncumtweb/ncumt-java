@@ -1,10 +1,8 @@
 package com.web.ncumt.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.FieldNameConstants;
 
 import java.time.LocalDateTime;
@@ -15,14 +13,8 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @FieldNameConstants
-public class Post {
-
-    /**
-     * 公告的唯一識別碼。
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+public class Post extends BaseEntity {
 
     /**
      * 發表公告的使用者 ID。
@@ -54,23 +46,4 @@ public class Post {
      */
     private LocalDateTime expiredAt;
 
-    /**
-     * 公告建立時間。
-     */
-    private LocalDateTime createdAt;
-
-    /**
-     * 公告最後更新時間。
-     */
-    private LocalDateTime updatedAt;
-
-    /**
-     * 建立此公告的使用者 ID。
-     */
-    private Long createUser;
-
-    /**
-     * 最後修改此公告的使用者 ID。
-     */
-    private Long modifyUser;
 }

@@ -1,13 +1,14 @@
 package com.web.ncumt.service;
 
 import com.web.ncumt.dto.CalendarEvent;
+import com.web.ncumt.entity.Event;
 
 import java.util.List;
 
 /**
  * 處理與行事曆相關的業務邏輯。
  */
-public interface EventService {
+public interface EventService extends BaseService<Event> {
 
     /**
      * 取得所有活動，並將其轉換為適合首頁日曆顯示的格式。

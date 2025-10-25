@@ -1,6 +1,6 @@
 package com.web.ncumt.service.impl;
 
-import com.web.ncumt.dto.PostFront;
+import com.web.ncumt.dto.post.PostFront;
 import com.web.ncumt.entity.Post;
 import com.web.ncumt.entity.User;
 import com.web.ncumt.repository.PostRepository;
@@ -22,39 +22,31 @@ import java.util.stream.Stream;
 
 @Service
 @SuppressWarnings("unused")
-public class PostServiceImpl implements PostService {
-
-    @Autowired
-    private PostRepository postRepository;
+public class PostServiceImpl extends BaseServiceImpl<Post, PostRepository> implements PostService {
 
     @Autowired
     private UserRepository userRepository;
 
-    @Override
-    public Page<PostFront> pageActivePost(Pageable pageable) {
-        Page<Post> postPage = postRepository.findByExpiredAtAfter(LocalDateTime.now(), pageable);
-        return toPostFrontPage(postPage);
+    @Autowired
+    public PostServiceImpl(PostRepository repository) {
+        super(repository);
     }
 
     @Override
-    public void createPost(Post post) {
-        postRepository.save(post);
+    public Page<PostFront> pageActivePost(Pageable pageable) {
+        Page<Post> postPage = repository.findByExpiredAtAfter(LocalDateTime.now(), pageable);
+        return toPostFrontPage(postPage);
     }
 
     @Override
     public Page<PostFront> pageAllPost(Pageable pageable) {
-        Page<Post> postPage = postRepository.findAll(pageable);
+        Page<Post> postPage = repository.findAll(pageable);
         return toPostFrontPage(postPage);
     }
 
     @Override
-    public Optional<Post> getPostById(Long id) {
-        return postRepository.findById(id);
-    }
-
-    @Override
     public Optional<PostFront> getPostFrontById(Long id) {
-        return postRepository.findById(id).map(post -> {
+        return repository.findById(id).map(post -> {
             if (post.getCreateUser() == null || post.getModifyUser() == null) {
                 return PostFront.fromEntity(post);
             }
@@ -63,16 +55,6 @@ public class PostServiceImpl implements PostService {
 
             return PostFront.fromEntity(post, userIdToNameMap);
         });
-    }
-
-    @Override
-    public void updatePost(Post post) {
-        postRepository.save(post);
-    }
-
-    @Override
-    public void deletePost(Long id) {
-        postRepository.deleteById(id);
     }
 
     /**

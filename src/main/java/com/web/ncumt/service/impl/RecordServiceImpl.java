@@ -13,14 +13,16 @@ import java.util.stream.Collectors;
 
 @Service
 @SuppressWarnings("unused")
-public class RecordServiceImpl implements RecordService {
+public class RecordServiceImpl extends BaseServiceImpl<Record, RecordRepository> implements RecordService {
 
     @Autowired
-    private RecordRepository recordRepository;
+    public RecordServiceImpl(RecordRepository repository) {
+        super(repository);
+    }
 
     @Override
     public List<RecordFront> listLatestRecord(int limit) {
-        List<Record> records = recordRepository.findAllByOrderByStartDateDesc(PageRequest.of(0, limit));
+        List<Record> records = repository.findAllByOrderByStartDateDesc(PageRequest.of(0, limit));
         return records.stream()
                 .map(RecordFront::fromEntity)
                 .collect(Collectors.toList());

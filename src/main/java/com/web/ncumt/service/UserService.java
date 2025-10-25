@@ -1,12 +1,14 @@
 package com.web.ncumt.service;
 
-import com.web.ncumt.dto.NcuUser;
+import com.web.ncumt.dto.user.NcuUser;
 import com.web.ncumt.entity.User;
+
+import java.util.Optional;
 
 /**
  * 提供使用者相關的業務邏輯。
  */
-public interface UserService {
+public interface UserService extends BaseService<User> {
     /**
      * 儲存使用者資訊。
      *
@@ -25,4 +27,6 @@ public interface UserService {
      * @return 找到或建立的使用者物件
      */
     User findOrCreateUser(NcuUser ncuUser);
+
+    Optional<User> findByEmail(String email);
 }

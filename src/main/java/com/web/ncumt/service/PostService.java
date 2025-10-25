@@ -1,6 +1,6 @@
 package com.web.ncumt.service;
 
-import com.web.ncumt.dto.PostFront;
+import com.web.ncumt.dto.post.PostFront;
 import com.web.ncumt.entity.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * 處理與文章相關的業務邏輯。
  */
-public interface PostService {
+public interface PostService extends BaseService<Post> {
 
     /**
      * 取得所有有效的文章列表，並進行分頁。
@@ -23,8 +23,6 @@ public interface PostService {
      * @return 一個包含所有有效 {@link PostFront} 物件的 Page。
      */
     Page<PostFront> pageActivePost(Pageable pageable);
-
-    void createPost(Post post);
 
     /**
      * 取得所有公告，並將其轉換為用於前端顯示的 DTO 列表。
@@ -47,11 +45,5 @@ public interface PostService {
      */
     Page<PostFront> pageAllPost(Pageable pageable);
 
-    Optional<Post> getPostById(Long id);
-
     Optional<PostFront> getPostFrontById(Long id);
-
-    void updatePost(Post post);
-
-    void deletePost(Long id);
 }

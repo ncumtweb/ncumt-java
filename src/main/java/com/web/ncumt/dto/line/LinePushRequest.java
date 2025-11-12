@@ -11,5 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 public class LinePushRequest {
     private String to;
-    private List<Message> messages; // 將類型改為通用的 List<Message>
+    private List<Message> messageList;
 }

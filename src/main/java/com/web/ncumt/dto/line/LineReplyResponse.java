@@ -10,5 +10,5 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LineReplyResponse {
-    private List<SentMessageInfo> sentMessages;
+    private List<SentMessageInfo> sentMessageList;
 }

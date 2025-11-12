@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 public class Button implements FlexComponent {
     private final String type = "button";
     private UriAction action;
-    private FlexButtonStyle style; // <--- 改為 enum
+    private FlexButtonStyle style;
 }

@@ -18,6 +18,6 @@ import java.util.List;
 public class Box implements FlexComponent {
     private final String type = "box";
     private FlexLayout layout;
-    private List<FlexComponent> contents;
+    private List<FlexComponent> contentList;
     private FlexSpacing spacing; // <--- 新增 spacing 欄位
 }

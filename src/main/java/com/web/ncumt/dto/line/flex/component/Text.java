@@ -17,7 +17,7 @@ public class Text implements FlexComponent {
     private final String type = "text";
     private String text;
     private Boolean wrap;
-    private FlexFontWeight weight; // <--- 改為 enum
-    private FlexFontSize size;     // <--- 改為 enum
+    private FlexFontWeight weight;
+    private FlexFontSize size;
     private Integer flex;
 }

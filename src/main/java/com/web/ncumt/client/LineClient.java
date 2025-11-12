@@ -1,5 +1,6 @@
 package com.web.ncumt.client;
 
+import com.web.ncumt.constant.HeaderConstant;
 import com.web.ncumt.dto.ApiResponse;
 import com.web.ncumt.dto.line.LinePushRequest;
 import com.web.ncumt.dto.line.LineReplyResponse;
@@ -43,15 +44,19 @@ public class LineClient {
      * @param request 包含訊息內容的請求物件。
      */
     private void pushMessage(Object request) {
-        Map<String, String> headers = new java.util.HashMap<>();
-        headers.put("Content-Type", "application/json");
-        headers.put("Authorization", "Bearer " + channelToken);
+        Map<String, String> headerMap = new java.util.HashMap<>();
+        headerMap.put(HeaderConstant.CONTENT_TYPE, HeaderConstant.APPLICATION_JSON);
+        headerMap.put(HeaderConstant.AUTHORIZATION, getChannelToken());
 
         try {
-            httpClient.post(LINE_API_URL, headers, request, LineReplyResponse.class);
+            httpClient.post(LINE_API_URL, headerMap, request, LineReplyResponse.class);
         } catch (Exception e) {
             log.error("Error sending message to Line: ", e);
             new ApiResponse<>(-1, null, e.getMessage());
         }
+    }
+
+    private String getChannelToken() {
+        return "Bearer " + channelToken;
     }
 }

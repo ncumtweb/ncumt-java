@@ -25,9 +25,7 @@ public class FlexMessageHelper {
      */
     public FlexMessage createExceptionAlert(String title, String exceptionType, String message, String requestId, String kibanaLink) {
         // Header
-        Box header = Box.builder()
-                .layout(FlexLayout.VERTICAL)
-                .contents(Collections.singletonList(
+        Box header = Box.builder().layout(FlexLayout.VERTICAL).contentList(Collections.singletonList(
                         Text.builder().text(title).weight(FlexFontWeight.BOLD).size(FlexFontSize.MD).build()
                 ))
                 .build();
@@ -39,18 +37,14 @@ public class FlexMessageHelper {
         if (requestId != null) {
             bodyContents.addAll(createKeyValueComponent("Request ID", requestId));
         }
-        Box body = Box.builder()
-                .layout(FlexLayout.VERTICAL)
-                .contents(bodyContents)
+        Box body = Box.builder().layout(FlexLayout.VERTICAL).contentList(bodyContents)
                 .spacing(FlexSpacing.MD) // 設定元件之間的間距
                 .build();
 
         // Footer - 只有在 kibanaLink 存在時才建立
         Box footer = null;
         if (kibanaLink != null) {
-            footer = Box.builder()
-                    .layout(FlexLayout.VERTICAL)
-                    .contents(Collections.singletonList(
+            footer = Box.builder().layout(FlexLayout.VERTICAL).contentList(Collections.singletonList(
                             Button.builder()
                                     .style(FlexButtonStyle.SECONDARY)
                                     .action(new UriAction("🔍 View Logs in Kibana", kibanaLink))

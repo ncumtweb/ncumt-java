@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FlexMessage implements Message { // 實作 Message 介面
+public class FlexMessage implements Message {
     private final String type = "flex";
     private String altText;
     private Bubble contents;
